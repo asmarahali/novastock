@@ -24,7 +24,7 @@ class UserController extends Controller
             [
                 'username' => 'required',
                 'email' => 'required|email|unique:users,email',
-                'number' => 'required',
+                'number' => 'required|digits:10',
                 'role' => 'required',
                 'password' => 'required'
             ]);
@@ -64,43 +64,63 @@ class UserController extends Controller
      * @param Request $request
      * @return User
      */
-    public function loginUser(Request $request)
-    {
-        try {
-            $validateUser = Validator::make($request->all(), 
-            [
-                'email' => 'required|email',
-                'password' => 'required'
+    public function login(Request $request){
+
+        // Validation
+        $request->validate([
+            "email" => "required|email|string",
+            "password" => "required"
+        ]);
+
+        // Email check
+        $user = User::where("email", $request->email)->first();
+
+        if(!empty($user)){
+            // User exists
+            if(Hash::check($request->password, $user->password)){
+                // Password matched
+                $token = $user->createToken("mytoken")->plainTextToken;
+                return response()->json([
+                    "status" => true,
+                    "message" => "User logged in",
+                    "token" => $token,
+                    "data" => []
+                ]);
+            }else{
+                return response()->json([
+                    "status" => false,
+                    "message" => "Invalid password",
+                    "data" => []
+                ]);
+            }
+        }else{
+            return response()->json([
+                "status" => false,
+                "message" => "Email doesn't match with records",
+                "data" => []
             ]);
-
-            if($validateUser->fails()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
-            }
-
-            if(!Auth::attempt($request->only(['email', 'password']))){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Email & Password does not match with our record.',
-                ], 401);
-            }
-
-            $user = User::where('email', $request->email)->first();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
-
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
         }
+    }
+    // GET [Auth: Token]
+    public function profile(){
+
+        $userData = auth()->user();
+        return response()->json([
+            "status" => true,
+            "message" => "Profile Information",
+            "data" => $userData,
+            "id" => auth()->user()->id
+        ]);
+    }
+
+    // GET [Auth: Token]
+    public function logout(){
+
+        auth()->user()->tokens()->delete();
+         return response()->json([
+            "status" => true,
+            "message" => "User logged out",
+            "data" => []
+        ]);
     }
 }
