@@ -123,4 +123,28 @@ class UserController extends Controller
             "data" => []
         ]);
     }
+    public function update(Request $request, $id)
+    {
+        // Validation rules if needed
+        $request->validate([
+            
+        
+            'username' => 'required',
+            'email' => 'required|email|unique:users,email'.$id,
+            'number' => 'required|digits:10',
+            'role' => 'required',
+            // Add more fields and validation rules as needed
+        ]);
+
+        $account = user::findOrFail($id);
+        
+        // Update account fields
+        $account->username = $request->input('username');
+        $account->email = $request->input('email');
+        // Update more fields as needed
+        
+        $account->save();
+
+        return response()->json($account, 200);
+    }
 }
