@@ -4,6 +4,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\StructureController;
+use App\Http\Controllers\Api\FournisseurController;
+
+Route::prefix('fournisseurs')->group(function () {
+    Route::get('/', [FournisseurController::class, 'index']);
+    Route::post('/', [FournisseurController::class, 'store']);
+    Route::get('/{id}', [FournisseurController::class, 'show']);
+    Route::put('/{id}', [FournisseurController::class, 'update']);
+    Route::delete('//{id}', [FournisseurController::class, 'destroy']);
+});
 
 Route::get('/structure', [StructureController::class, 'index']);
 Route::post('/structure', [StructureController::class, 'store']);

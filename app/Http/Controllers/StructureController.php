@@ -1,52 +1,59 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Structure;
+use App\Http\Controllers\Controller;
+use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 
 class StructureController extends Controller
 {
     public function index()
     {
-        return Structure::all();
+        return Fournisseur::all();
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'Libelle' => 'required|unique:structures|string',
-            'Résponsable' => 'required|string',
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'adresse' => 'nullable|string',
+            'number' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'bio' => 'nullable|string',
         ]);
 
-        return Structure::create($request->all());
+        return Fournisseur::create($request->all());
     }
 
     public function show($id)
     {
-        return Structure::findOrFail($id);
+        return Fournisseur::findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $structure = Structure::findOrFail($id);
-        $validator = Validator::make($request->all(), [
-            'Libelle' => 'required|unique:structures|string',
-            'Résponsable' => 'required|string',
+        $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'adresse' => 'nullable|string',
+            'number' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'bio' => 'nullable|string',
         ]);
-        
-        if ($validator->fails()) {
-            dd($validator->errors());
-        }
-        
-        $structure->update($request->all());
-        return $structure;
+
+        $fournisseur = Fournisseur::findOrFail($id);
+        $fournisseur->update($request->all());
+
+        return $fournisseur;
     }
 
     public function destroy($id)
     {
-        $structure = Structure::findOrFail($id);
-        $structure->delete();
-        return 204;
+        $fournisseur = Fournisseur::findOrFail($id);
+        $fournisseur->delete();
+
+        return response()->json(['message' => 'Fournisseur supprimé avec succès!']);
     }
 }
