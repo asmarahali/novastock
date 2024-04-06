@@ -7,7 +7,7 @@ use App\Http\Controllers\StructureController;
 use App\Http\Controllers\Api\FournisseurController;
 use App\Http\Controllers\Api\ChapterController;
 use App\Http\Controllers\Api\ArticleController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Api\ProductController;
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::post('/products', [ProductController::class, 'store']);
