@@ -18,10 +18,10 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->integer('min');
             $table->unsignedBigInteger('fournisseur_id');
-            $table->unsignedBigInteger('article_id')->nullable(); // Add article_id column
+          
 
             $table->foreign('fournisseur_id')->references('id')->on('fournisseurs')->onDelete('cascade');
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade'); // Add foreign key constraint for article_id
+           
             $table->timestamps();
         });
     }

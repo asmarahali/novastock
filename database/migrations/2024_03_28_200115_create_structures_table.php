@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('structures', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('responsable_id')->nullable();
+            $table->foreign('responsable_id')->references('id')->on('users')->onDelete('set null');
             $table->string('Libelle')->unique() ;
-            $table->string('Résponsable');
             $table->timestamps();
         });
     }

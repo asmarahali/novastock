@@ -21,8 +21,8 @@ class Product extends Model
     }
 
 
-    public function article()
+    public function articles()
     {
-        return $this->belongsTo(Article::class);
+        return $this->belongsToMany(Article::class);
     }
 }
