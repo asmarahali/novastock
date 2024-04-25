@@ -129,4 +129,30 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function profile(){
+
+        $userData = auth()->user();
+        return response()->json([
+            "status" => true,
+            "message" => "Profile Information",
+            "data" => $userData,
+            "id" => auth()->user()->id
+        ]);
+    }
+
+    // GET [Auth: Token]
+    public function logout(){
+
+        auth()->user()->tokens()->delete();
+         return response()->json([
+            "status" => true,
+            "message" => "User logged out",
+            "data" => []
+        ]);
+    }
+    
+
+       
 }
+
