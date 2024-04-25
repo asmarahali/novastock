@@ -19,38 +19,42 @@ class UserController extends Controller
     public function createUser(Request $request)
     {
         try {
-            //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'username' => 'required',
+            // Validation
+            $validateUser = Validator::make($request->all(), [
+                'firstname' => 'required',
+                'lastname' => 'nullable',
                 'email' => 'required|email|unique:users,email',
-                'number' => 'required|digits:10',
-                'role' => 'required',
-                'password' => 'required'
+                'numero' => 'required|digits:10|unique:users,numero',
+                'photo_url' => 'nullable',
+                'is_active' => 'nullable|boolean',
+                'password' => 'required',
             ]);
-
-            if($validateUser->fails()){
+    
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation error',
                     'errors' => $validateUser->errors()
                 ], 401);
             }
-
+    
+            // Create user
             $user = User::create([
-                'username' => $request->username,
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
                 'email' => $request->email,
-                'number' => $request->number,
-                'role' => $request->role,
+                'numero' => $request->numero,
+                'photo_url' => $request->photo_url,
+                'is_active' => $request->is_active ?? false, // Default to false if not provided
                 'password' => Hash::make($request->password)
             ]);
-
+    
             return response()->json([
                 'status' => true,
-                'message' => 'User Created Successfully',
+                'message' => 'User created successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
-
+    
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -58,12 +62,36 @@ class UserController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Login The User
-     * @param Request $request
-     * @return User
-     */
+    
+    public function update(Request $request, $id)
+    {
+        // Validation
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'nullable',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'numero' => 'required|digits:10|unique:users,numero,' . $id,
+            'photo_url' => 'nullable',
+            'is_active' => 'nullable|boolean',
+            'password' => 'required',
+        ]);
+    
+        // Find the user
+        $user = User::findOrFail($id);
+        
+        // Update user data
+        $user->firstname = $request->input('firstname');
+        $user->lastname = $request->input('lastname');
+        $user->email = $request->input('email');
+        $user->numero = $request->input('numero');
+        $user->photo_url = $request->input('photo_url');
+        $user->is_active = $request->input('is_active') ?? true; 
+        $user->password = Hash::make($request->input('password'));
+    
+        $user->save();
+    
+        return response()->json($user, 200);
+    }
     public function login(Request $request){
 
         // Validation
@@ -100,51 +128,5 @@ class UserController extends Controller
                 "data" => []
             ]);
         }
-    }
-    // GET [Auth: Token]
-    public function profile(){
-
-        $userData = auth()->user();
-        return response()->json([
-            "status" => true,
-            "message" => "Profile Information",
-            "data" => $userData,
-            "id" => auth()->user()->id
-        ]);
-    }
-
-    // GET [Auth: Token]
-    public function logout(){
-
-        auth()->user()->tokens()->delete();
-         return response()->json([
-            "status" => true,
-            "message" => "User logged out",
-            "data" => []
-        ]);
-    }
-    public function update(Request $request, $id)
-    {
-        // Validation rules if needed
-        $request->validate([
-            
-        
-            'username' => 'required',
-            'email' => 'required|email|unique:users,email'.$id,
-            'number' => 'required|digits:10',
-            'role' => 'required',
-            // Add more fields and validation rules as needed
-        ]);
-
-        $account = user::findOrFail($id);
-        
-        // Update account fields
-        $account->username = $request->input('username');
-        $account->email = $request->input('email');
-        // Update more fields as needed
-        
-        $account->save();
-
-        return response()->json($account, 200);
     }
 }

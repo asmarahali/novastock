@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
-            $table->String('label');
-            $table->text('description')->nullable();
+            $table->String('name');
             $table->timestamps();
         });
     }

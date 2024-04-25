@@ -13,16 +13,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('fistname')->nullable();
-            $table->string('lastname')->nullable();
+            $table->string('firstname');
+            $table->string('lastname');
             $table->string('email')->unique();
+            $table->Integer('numero')->unique()->nullable();
+            $table->string('photo_url')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->enum('role', ['Administrateur', 'ASA', 'Magasinier','Consommateur','RSR', 'Directeur'])->default('Consommateur');
             $table->string('password');
+            
             $table->timestamps();
         });
     }
-
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
     /**
      * Reverse the migrations.
      */

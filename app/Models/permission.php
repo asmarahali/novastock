@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Chapter extends Model
+class permission extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['nom'];
-
-    public function articles()
+   
+    protected $fillable = ['name'];
+    public function roles()
     {
-        return $this->hasMany(Article::class);
+        return $this->belongsToMany(Role::class);
     }
 }

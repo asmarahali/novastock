@@ -8,11 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'chapiter_id',
-        'label',
-        'description',
-    ];
+    protected $fillable = ['nom', 'tva'];
     public function chapiter()
 {
     return $this->belongsTo(Chapiter::class);

@@ -21,13 +21,9 @@ class User extends Model
      */
     
      protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'is_active',
-        'role',
-        'password',
+        'firstname', 'lastname', 'email', 'numero', 'photo_url', 'is_active', 'password'
     ];
+
     /**
      * The attributes that should be hidden for serialization.
      *

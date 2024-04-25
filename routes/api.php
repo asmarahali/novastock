@@ -30,8 +30,8 @@ Route::delete('/chapters/{id}', [ChapterController::class, 'destroy']);
 
 
 Route::prefix('fournisseurs')->group(function () {
-    Route::get('/', [FournisseurController::class, 'index'])->middleware('admin');
-    Route::post('/', [FournisseurController::class, 'store'])->middleware('admin');
+    Route::get('/', [FournisseurController::class, 'index']);
+    Route::post('/', [FournisseurController::class, 'store']);
     Route::get('/{id}', [FournisseurController::class, 'show'])->middleware('admin');
     Route::put('/{id}', [FournisseurController::class, 'update'])->middleware('admin');
     Route::delete('//{id}', [FournisseurController::class, 'destroy'])->middleware('admin');
@@ -44,7 +44,7 @@ Route::put('/structure/{id}', [StructureController::class, 'update'])->middlewar
 Route::delete('/structure/{id}', [StructureController::class, 'destroy'])->middleware('admin');
 
 
-Route::post('/auth/register', [UserController::class, 'createUser'])->middleware('admin');
+Route::post('/auth/register', [UserController::class, 'createUser']);
 Route::post('/auth/login', [UserController::class, 'login']);
 
 

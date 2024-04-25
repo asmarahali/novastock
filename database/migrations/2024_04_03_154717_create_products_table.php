@@ -17,11 +17,6 @@ return new class extends Migration
             $table->integer('quantity')->default(0);
             $table->decimal('price', 8, 2);
             $table->integer('min');
-            $table->unsignedBigInteger('fournisseur_id');
-          
-
-            $table->foreign('fournisseur_id')->references('id')->on('fournisseurs')->onDelete('cascade');
-           
             $table->timestamps();
         });
     }

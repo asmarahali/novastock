@@ -11,24 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fournisseurs', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('adresse');
-            $table->integer('number');
-            $table->string('email')->unique();
-            $table->string('NIS');
-            $table->integer('NIF');
-            $table->string('RC');
+            $table->string('name'); 
             $table->timestamps();
         });
     }
-
+   
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('fournisseurs');
+        Schema::dropIfExists('roles');
     }
 };

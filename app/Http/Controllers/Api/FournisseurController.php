@@ -27,12 +27,13 @@ class FournisseurController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'adresse' => 'nullable|string',
-            'number' => 'nullable|string|max:20',
-            'email' => 'required|email|unique:fournisseurs,email',
-            'bio' => 'nullable|string',
+            'name' => 'required',
+            'adresse' => 'required',
+            'number' => 'required',
+            'email' => 'required|email|unique:fournisseurs,email,',
+            'NIS' => 'required',
+            'NIF' => 'required',
+            'RC' => 'required',
         ]);
 
         $fournisseur = Fournisseur::create($request->all());
@@ -63,12 +64,13 @@ class FournisseurController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'adresse' => 'nullable|string',
-            'number' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
-            'bio' => 'nullable|string',
+            'name' => 'required',
+            'adresse' => 'required',
+            'number' => 'required',
+            'email' => 'required|email|unique:fournisseurs,email,'.$fournisseur->id,
+            'NIS' => 'required',
+            'NIF' => 'required',
+            'RC' => 'required',
         ]);
 
         $fournisseur = Fournisseur::findOrFail($id);
