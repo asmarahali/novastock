@@ -8,10 +8,34 @@ use Illuminate\Database\Eloquent\Model;
 class permission extends Model
 {
     use HasFactory;
-   
-    protected $fillable = ['name'];
-    public function roles()
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'permissions';
+
+    const TYPES = [
+        "DEFAULT" => "default",
+        "CUSTOM" => "custom",
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'type'
+    ];
+
+    /**
+     * The users that belong to the role.
+     */
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'role_permission');
     }
 }

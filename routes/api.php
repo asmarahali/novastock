@@ -23,10 +23,10 @@ Route::get('/articles/{article}', [ArticleController::class, 'show']);
 Route::put('/articles/{article}', [ArticleController::class, 'update']);
 Route::delete('/articles/{article}', [ArticleController::class, 'destroy']);
 
-Route::get('/chapters', [ChapterController::class, 'index']);
-Route::post('/chapters', [ChapterController::class, 'store']);
-Route::put('/chapters/{id}', [ChapterController::class, 'update']);
-Route::delete('/chapters/{id}', [ChapterController::class, 'destroy']);
+Route::get('/chapters', [ChapterController::class, 'index'])->middleware('can:read-chapter');
+Route::post('/chapters', [ChapterController::class, 'store'])->middleware('can:create-chapter');
+Route::put('/chapters/{id}', [ChapterController::class, 'update'])->middleware('can:update-chapter');
+Route::delete('/chapters/{id}', [ChapterController::class, 'destroy'])->middleware('can:delete-chapter');
 
 
 Route::prefix('fournisseurs')->group(function () {
@@ -44,7 +44,7 @@ Route::put('/structure/{id}', [StructureController::class, 'update'])->middlewar
 Route::delete('/structure/{id}', [StructureController::class, 'destroy'])->middleware('admin');
 
 
-Route::post('/auth/register', [UserController::class, 'createUser']);
+Route::post('/auth/register', [UserController::class, 'createUser'])->middleware('can:create-user');
 Route::post('/auth/login', [UserController::class, 'login']);
 
 
@@ -55,4 +55,4 @@ Route::group([
     Route::get("logout", [UserController::class, "logout"]);
 });
 
-Route::put('/update/{id}', [UserController::class, 'update']);
+Route::put('/update/{id}', [UserController::class, 'update'])->middleware('can:update-user');

@@ -17,8 +17,8 @@ class ChapterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'label' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'name' => 'required|string|max:255',
+            
         ]);
 
         $chapter = Chapter::create($request->all());
@@ -26,29 +26,24 @@ class ChapterController extends Controller
         return response()->json($chapter, 201);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'id' => 'required|exists:chapters,id',
-            'label' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'name' => 'required|string|max:255',
         ]);
-
-        $chapter = Chapter::findOrFail($request->id);
+    
+        $chapter = Chapter::findOrFail($id);
         $chapter->update($request->all());
-
+    
         return response()->json($chapter, 200);
     }
+    
 
-    public function destroy(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:chapters,id',
-        ]);
+    public function destroy($id)
+{
+    $chapter = Chapter::findOrFail($id);
+    $chapter->delete();
 
-        $chapter = Chapter::findOrFail($request->id);
-        $chapter->delete();
-
-        return response()->json([], 204);
-    }
+    return response()->json([], 204);
+}
 }
