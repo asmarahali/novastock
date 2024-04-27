@@ -47,4 +47,24 @@ class User extends Model
     {
         return $query->where('role', 'RSR');
     }
+
+    // this should not be here, 
+    // ediha l user model 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+
+    /**
+     * list permissions for this user
+    */
+    public function getPermissionsAttribute(){
+        return $this->roles() // get me this user's roles
+        ->with('permissions') // get permissions with each role
+        ->get() // execute 
+        ->pluck('permissions') // pluck only permissions attribute from all records
+        ->flatten() // flatten results and get me only permissions collections
+        ->unique(); // filter unique records (since many roles can share the same permission)
+    }
 }

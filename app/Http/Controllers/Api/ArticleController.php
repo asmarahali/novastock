@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\Chapter;
 
 class ArticleController extends Controller
 {
@@ -18,7 +19,11 @@ class ArticleController extends Controller
         $articles = Article::all();
         return response()->json($articles, 200);
     }
-
+    public function index1(Chapter $chapter)
+    {
+        $articles = $chapter->articles;
+        return response()->json($articles);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -44,9 +49,11 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+  
+    public function show(Chapter $chapter, Article $article)
     {
-        return response()->json($article, 200);
+        $article->load('products');
+        return response()->json($article);
     }
 
     /**
@@ -81,4 +88,7 @@ class ArticleController extends Controller
 
         return response()->json([], 204);
     }
+   
+
+   
 }

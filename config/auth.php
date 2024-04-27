@@ -2,7 +2,7 @@
 
 return [
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api', // DEFAULT AUTHENTICATION GUARD
         'passwords' => 'users',
     ],
 
@@ -11,6 +11,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'sanctum', 
+            'provider' => 'users' 
+        ]
     ],
     'providers' => [
         'users' => [

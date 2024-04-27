@@ -9,58 +9,26 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Requests\CreateUserRequest;
+
 class UserController extends Controller
 {
     /**
      * Create User
-     * @param Request $request
+     * @param App\Http\Requests\CreateUserRequest $request
      * @return User 
      */
-    public function createUser(Request $request)
+    public function createUser(CreateUserRequest $request)
     {
-        try {
-            // Validation
-            $validateUser = Validator::make($request->all(), [
-                'firstname' => 'required',
-                'lastname' => 'nullable',
-                'email' => 'required|email|unique:users,email',
-                'numero' => 'required|digits:10|unique:users,numero',
-                'photo_url' => 'nullable',
-                'is_active' => 'nullable|boolean',
-                'password' => 'required',
-            ]);
+        
+        $user = User::create($request->except('roles_ids'));
+        $user->roles()->attach($request->roles_ids);
     
-            if ($validateUser->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
-            }
-    
-            // Create user
-            $user = User::create([
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'email' => $request->email,
-                'numero' => $request->numero,
-                'photo_url' => $request->photo_url,
-                'is_active' => $request->is_active ?? false, // Default to false if not provided
-                'password' => Hash::make($request->password)
-            ]);
-    
-            return response()->json([
-                'status' => true,
-                'message' => 'User created successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
-    
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'status' => true,
+            'message' => 'User created successfully',
+            'token' => $user->createToken("API TOKEN")->plainTextToken
+        ], 200);
     }
     
     public function update(Request $request, $id)

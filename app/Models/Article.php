@@ -11,7 +11,7 @@ class Article extends Model
     protected $fillable = ['nom', 'tva'];
     public function chapiter()
 {
-    return $this->belongsTo(Chapiter::class);
+    return $this->belongsTo(Chapter::class);
 }
 
 public function products()

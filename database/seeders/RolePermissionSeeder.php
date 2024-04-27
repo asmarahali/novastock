@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Role;
+use App\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -15,12 +18,14 @@ class RolePermissionSeeder extends Seeder
 
         $roles = [
             Role::DEFAULT_ROLES["ADMIN"] => [
-                'create-user', 'read-user', 'update-user', 'read-dashboard-admin',
+                'create-user', 'read-user', 'update-user',
                 
             ],
             Role::DEFAULT_ROLES["ASA"]  => [
                 'create-fournisseur','read-fournisseur','update-fournisseur','delete-fournisseur',
-                'read-chapter',
+                'show-fournisseur','read-chapter','create-chapter','update-chapter','delete-chapter',
+                'read-product','create-product','show-product','update-product','delete-product',
+                'read-article','create-article','show-article','update-article','delete-article',
             ],
             Role::DEFAULT_ROLES['MAGASINIER'] => [
                 

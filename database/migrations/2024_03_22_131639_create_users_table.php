@@ -24,10 +24,8 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
+
+    
     /**
      * Reverse the migrations.
      */
