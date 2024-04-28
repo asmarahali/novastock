@@ -12,11 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('quantite_commandee', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('bc_externe_id')->constrained();
-            $table->unsignedInteger('quantity'); // Add other fields if needed
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('b_c_externe_id');
             $table->timestamps();
+
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('b_c_externe_id')->references('id')->on('b_c_externes')->onDelete('cascade');
+            $table->primary(['product_id', 'b_c_externe_id']);
+
+            $table->unsignedInteger('quantity'); // Add other fields if needed
+            
         });
     }
 
