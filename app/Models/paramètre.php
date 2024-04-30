@@ -15,4 +15,8 @@ class paramètre extends Model
         'Téléphone',
         'photo_url',
     ];
+    protected $casts = [
+        'id' => 'integer',
+        'Téléphone' => 'integer',
+    ];
 }

@@ -19,6 +19,7 @@ class RolePermissionSeeder extends Seeder
         $roles = [
             Role::DEFAULT_ROLES["ADMIN"] => [
                 'create-user', 'read-user', 'update-user',
+                'read-paramaters','create-paramaters','show-paramaters','update-paramaters','delete-paramaters',
                 
             ],
             Role::DEFAULT_ROLES["ASA"]  => [
@@ -26,6 +27,7 @@ class RolePermissionSeeder extends Seeder
                 'show-fournisseur','read-chapter','create-chapter','update-chapter','delete-chapter',
                 'read-product','create-product','show-product','update-product','delete-product',
                 'read-article','create-article','show-article','update-article','delete-article',
+                'show-paramaters',
             ],
             Role::DEFAULT_ROLES['MAGASINIER'] => [
                 

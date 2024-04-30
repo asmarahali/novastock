@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\ChapterArticleProductController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RoleController;
 use App\Models\Role;
+use App\Http\Controllers\Api\ParamètreController;
+use App\Http\Controllers\Api\QuantitéCommandController;
 
 Route::get('/products', [ProductController::class, 'index'])->middleware('is_able:read-product');
 Route::post('/products', [ProductController::class, 'store'])->middleware('is_able:create-product');
@@ -41,8 +43,8 @@ Route::prefix('fournisseurs')->group(function () {
     Route::delete('//{id}', [FournisseurController::class, 'destroy'])->middleware('is_able:delete-fournisseur');
 });
 
-Route::post('/auth/register', [UserController::class, 'createUser'])->middleware('is_able:create-user');
-Route::post('/auth/login', [UserController::class, 'login']);
+Route::post('/auth/register', [UserController::class, 'createUser']);//->middleware('is_able:create-user');
+Route::post('/auth/login', [UserController::class, 'login'])->name('login');
 
 
 Route::group([
@@ -67,6 +69,13 @@ Route::post('/roles', [RoleController::class, 'store']);
 Route::put('/roles/{id}', [RoleController::class, 'update']);
 Route::delete('/roles/{id}', [RoleController::class, 'destroy']);
 
+
+Route::get('/paramètres', [ParamètreController::class, 'index'])->middleware('is_able:read-paramaters');
+Route::post('/paramètres', [ParamètreController::class, 'store'])->middleware('is_able:create-paramaters');
+Route::get('/paramètres/{paramètre}', [ParamètreController::class, 'show'])->middleware('is_able:show-paramaters');
+Route::put('/paramètres/{paramètre}', [ParamètreController::class, 'update'])->middleware('is_able:update-paramaters');
+Route::delete('/paramètres/{paramètre}', [ParamètreController::class, 'destroy'])->middleware('is_able:delete-paramaters');
+
 // pour le bon de commande 
 
 Route::prefix('chapters')->group(function () {
@@ -82,5 +91,6 @@ Route::prefix('chapters/{chapter}/articles')->controller(ChapterArticleControlle
 Route::prefix('chapters/{chapter}/articles/{article}/products')->controller(ChapterArticleProductController::class)->group(function () {
     Route::get('/', 'index'); 
     Route::get('/{product}', 'show');
-
 });
+
+Route::post('/create-bc', [QuantitéCommandController::class, 'store']);

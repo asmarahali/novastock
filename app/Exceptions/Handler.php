@@ -4,6 +4,11 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Exception;
+
 
 class Handler extends ExceptionHandler
 {
@@ -26,5 +31,21 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        // catch 405 errors and show JSON response instead
+        $this->renderable(function(MethodNotAllowedHttpException $e){
+            return response()->json([
+                'error' => 'This method is not allowed, Try other.'
+            ], 405); 
+        });
+
+        
+        $this->renderable(function(NotFoundHttpException $e){
+            return response()->json([
+                'error' => 'The url you\'re trying to access is not available on this server.'
+            ], 404);
+        }); 
+
+       
     }
 }

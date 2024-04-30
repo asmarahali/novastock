@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('b_c_externes', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->date('date')->default(now());
             $table->timestamps();
         });
     }

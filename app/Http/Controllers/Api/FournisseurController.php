@@ -67,7 +67,7 @@ class FournisseurController extends Controller
             'name' => 'required',
             'adresse' => 'required',
             'number' => 'required',
-            'email' => 'required|email|unique:fournisseurs,email,'.$fournisseur->id,
+            'email' => 'required|email|unique:fournisseurs,email,',
             'NIS' => 'required',
             'NIF' => 'required',
             'RC' => 'required',
