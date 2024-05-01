@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
        
 
         // Seed articles
-        $this->call(ArticleSeeder::class);
+        $this->call([
+            // ArticleSeeder::class,
+            ProductSeeder::class
+        ]);
     }
 }

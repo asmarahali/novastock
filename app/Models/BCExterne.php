@@ -13,7 +13,7 @@ class BCExterne extends Model
     ];
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'quantite_commandee')
-                    ->withPivot('quantity');
+        return $this->belongsToMany(Product::class, 'quantite_commandes')
+        ->withPivot('quantity');
     }
 }

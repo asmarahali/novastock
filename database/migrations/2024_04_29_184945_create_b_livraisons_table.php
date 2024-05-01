@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('b_livraisons', function (Blueprint $table) {
             $table->id();
             $table->date('date')->default(now());
+            $table->unsignedBigInteger('b_c_externe_id');
+
+            $table->foreign('b_c_externe_id')->references('id')->on('b_c_externes')->onDelete('cascade');
             $table->timestamps();
         });
     }

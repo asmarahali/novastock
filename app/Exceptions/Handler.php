@@ -7,6 +7,7 @@ use Throwable;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Validation\ValidationException;
 use Exception;
 
 
@@ -45,6 +46,12 @@ class Handler extends ExceptionHandler
                 'error' => 'The url you\'re trying to access is not available on this server.'
             ], 404);
         }); 
+
+        $this->renderable((function(ValidationException $e){
+            return response()->json([
+                'error' => $e->errors()
+            ], 422);
+        }));
 
        
     }

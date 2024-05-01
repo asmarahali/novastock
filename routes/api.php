@@ -15,8 +15,7 @@ use App\Models\Role;
 use App\Http\Controllers\Api\ParamètreController;
 use App\Http\Controllers\Api\QuantitéCommandController;
 use App\Http\Controllers\Api\B_C_ExterneController;
-
-
+use App\Http\Controllers\Api\QuantiteLivréContoller;
 
 Route::get('/products', [ProductController::class, 'index'])->middleware('is_able:read-product');
 Route::post('/products', [ProductController::class, 'store'])->middleware('is_able:create-product');
@@ -103,3 +102,6 @@ Route::get('/bcexternes', [B_C_ExterneController::class, 'index'])->middleware('
 Route::post('/bcexternes', [B_C_ExterneController::class, 'store'])->middleware('is_able:create-BCE');
 Route::get('/bcexternes/{id}', [B_C_ExterneController::class, 'show'])->middleware('is_able:show-BCE');
 Route::delete('/bcexternes/{id}', [B_C_ExterneController::class, 'destroy'])->middleware('is_able:delete-BCE');
+
+// bon de livraison
+Route::patch('bs_de_livraison/{b_livraison}/quantity', [QuantiteLivréContoller::class, 'store']);

@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('quantite_livre', function (Blueprint $table) {
+            
+            $table->id();
+
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('b_livraison_id');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('b_livraison_id')->references('id')->on('b_livraisons')->onDelete('cascade');
-            $table->primary(['product_id', 'b_livraison_id']);
+            $table->unique(['product_id', 'b_livraison_id']);
 
             $table->unsignedInteger('quantity'); // Add other fields if needed
             

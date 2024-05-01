@@ -17,7 +17,7 @@ return new class extends Migration
         // Ajoutez d'autres colonnes au besoin
 
         // Clés étrangères
-        $table->foreign('b_sortie_id')->references('id')->on('bon_sorties')->onDelete('cascade');
+        $table->foreign('b_sortie_id')->references('id')->on('b_sorties')->onDelete('cascade');
         $table->foreign('b_c_interne_id')->references('id')->on('b_c_internes')->onDelete('cascade');
 
         // Index unique pour empêcher les doublons

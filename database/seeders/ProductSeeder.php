@@ -13,7 +13,9 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
+        Product::factory()->count(20)->create();
         // Generate and insert 20 dummy products
+        /*
         for ($i = 1; $i <= 20; $i++) {
             Product::create([
                 'name' => 'Product ' . $i,
@@ -24,6 +26,6 @@ class ProductSeeder extends Seeder
                 'fournisseur_id' => rand(1, 5), // Random fournisseur ID (assuming there are 5 fournisseurs)
                 'article_id' => rand(1, 10), // Random article ID (assuming there are 10 articles)
             ]);
-        }
+        }*/
     }
 }
