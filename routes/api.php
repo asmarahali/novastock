@@ -14,7 +14,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Models\Role;
 use App\Http\Controllers\Api\ParamètreController;
 use App\Http\Controllers\Api\QuantitéCommandController;
-use App\Http\Controllers\Api\BCExterneController;
+use App\Http\Controllers\Api\B_C_ExterneController;
 
 
 
@@ -97,8 +97,9 @@ Route::prefix('chapters/{chapter}/articles/{article}/products')->controller(Chap
 });
 
 Route::post('/create-bc', [QuantitéCommandController::class, 'store'])->middleware('is_able:create-bcq');
+Route::get('/show-bc/{b_c_externe_id}',[QuantitéCommandController::class, 'show']);
 
-Route::get('/bcexternes', [BCExterneController::class, 'index'])->middleware('is_able:read-BCE');
-Route::post('/bcexternes', [BCExterneController::class, 'store'])->middleware('is_able:create-BCE');
-Route::get('/bcexternes/{id}', [BCExterneController::class, 'show'])->middleware('is_able:show-BCE');
-Route::delete('/bcexternes/{id}', [BCExterneController::class, 'destroy'])->middleware('is_able:delete-BCE');
+Route::get('/bcexternes', [B_C_ExterneController::class, 'index'])->middleware('is_able:read-BCE');
+Route::post('/bcexternes', [B_C_ExterneController::class, 'store'])->middleware('is_able:create-BCE');
+Route::get('/bcexternes/{id}', [B_C_ExterneController::class, 'show'])->middleware('is_able:show-BCE');
+Route::delete('/bcexternes/{id}', [B_C_ExterneController::class, 'destroy'])->middleware('is_able:delete-BCE');

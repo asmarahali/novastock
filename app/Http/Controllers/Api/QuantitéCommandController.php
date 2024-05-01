@@ -24,4 +24,22 @@ class QuantitéCommandController extends Controller
 
         ], 200);
     }
+
+    public function show( $b_c_externe_id){
+        dd("hello");
+        $quantities = quantité_commande::where('b_c_externe_id', $b_c_externe_id)->get();
+
+        // Check if quantities exist
+        if ($quantities->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No quantities found for the provided id_bce.'
+            ], 404);
+        }
+    
+        return response()->json([
+            'status' => true,
+            'quantities' => $quantities
+        ], 200);
+    }
 }

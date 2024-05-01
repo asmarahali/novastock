@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BCExterne;
 use Illuminate\Http\Request;
 
-class BCExterneController extends Controller
+class B_C_ExterneController extends Controller
 { 
     public function index()
     {

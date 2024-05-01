@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('b_livraisons', function (Blueprint $table) {
             $table->id();
+            $table->date('date')->default(now());
             $table->timestamps();
         });
     }
