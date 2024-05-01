@@ -27,7 +27,7 @@ class RolePermissionSeeder extends Seeder
                 'show-fournisseur','read-chapter','create-chapter','update-chapter','delete-chapter',
                 'read-product','create-product','show-product','update-product','delete-product',
                 'read-article','create-article','show-article','update-article','delete-article',
-                'show-paramaters',
+                'show-paramaters','read-BCE','create-BCE','show-BCE','delete-BCE','create-bcq'
             ],
             Role::DEFAULT_ROLES['MAGASINIER'] => [
                 
