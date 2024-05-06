@@ -16,4 +16,8 @@ class BCExterne extends Model
         return $this->belongsToMany(Product::class, 'quantite_commandes')
         ->withPivot('quantity');
     }
+
+    public function quantite_commandes(){
+        return $this->hasMany(quantité_commande::class);
+    }
 }

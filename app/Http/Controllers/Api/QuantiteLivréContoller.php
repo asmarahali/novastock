@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Quantite_livre;
 use App\Rules\ProductExistsInBL;
+use App\Rules\CheckProductCommande;
 
 class QuantiteLivréContoller extends Controller
 {
@@ -26,12 +27,14 @@ class QuantiteLivréContoller extends Controller
                 'exists:products,id',
                 new ProductExistsInBL($b_livraison->id)
             ],
-            '*.quantity' => 'required|integer'
+            '*.quantity' => [
+                'required',
+                'integer',
+                new CheckProductCommande($b_livraison->id)
+            ]
         ]);
 
         // solution 1
-
-       
         foreach ($data as $p) {          
             $exists = Quantite_livre::where('product_id', $p['product_id'])
             ->where('b_livraison_id', $b_livraison->id)

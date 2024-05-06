@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('b_livraison_id')->references('id')->on('b_livraisons')->onDelete('cascade');
             $table->unique(['product_id', 'b_livraison_id']);
 
-            $table->unsignedInteger('quantity'); // Add other fields if needed
+            $table->unsignedInteger('quantity'); 
             
         });
     }
