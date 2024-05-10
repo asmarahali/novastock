@@ -16,6 +16,9 @@ use App\Http\Controllers\Api\ParamètreController;
 use App\Http\Controllers\Api\QuantitéCommandController;
 use App\Http\Controllers\Api\B_C_ExterneController;
 use App\Http\Controllers\Api\QuantiteLivréContoller;
+use App\Http\Controllers\Api\B_C_InterneController;
+use App\Http\Controllers\QunatiteDemandeController;
+
 
 Route::get('/products', [ProductController::class, 'index'])->middleware('is_able:read-product');
 Route::post('/products', [ProductController::class, 'store'])->middleware('is_able:create-product');
@@ -95,13 +98,28 @@ Route::prefix('chapters/{chapter}/articles/{article}/products')->controller(Chap
     Route::get('/{product}', 'show');
 });
 
-Route::post('/create-bc', [QuantitéCommandController::class, 'store'])->middleware('is_able:create-bcq');
+Route::post('/create-bce', [QuantitéCommandController::class, 'store'])->middleware('is_able:create-bcq');
 Route::get('/show-bc/{b_c_externe_id}',[QuantitéCommandController::class, 'show']);
+Route::put('/update-bc/{b_c_externe_id}',[QuantitéCommandController::class, 'update']);
 
-Route::get('/bcexternes', [B_C_ExterneController::class, 'index'])->middleware('is_able:read-BCE');
-Route::post('/bcexternes', [B_C_ExterneController::class, 'store'])->middleware('is_able:create-BCE');
-Route::get('/bcexternes/{id}', [B_C_ExterneController::class, 'show'])->middleware('is_able:show-BCE');
-Route::delete('/bcexternes/{id}', [B_C_ExterneController::class, 'destroy'])->middleware('is_able:delete-BCE');
+
+
+
+Route::get('/bce', [B_C_ExterneController::class, 'index'])->middleware('is_able:read-BCE');
+Route::post('/bce', [B_C_ExterneController::class, 'store'])->middleware('is_able:create-BCE');
+Route::get('/bce/{id}', [B_C_ExterneController::class, 'show'])->middleware('is_able:show-BCE');
+Route::delete('/bce/{id}', [B_C_ExterneController::class, 'destroy'])->middleware('is_able:delete-BCE');
 
 // bon de livraison
 Route::patch('bs_de_livraison/{b_livraison}/quantity', [QuantiteLivréContoller::class, 'store']);
+
+
+// Bon de commande interne
+Route::get('/bci', [B_C_InterneController::class, 'index'])->middleware('is_able:read-BCI');
+Route::post('/bci', [B_C_InterneController::class, 'store'])->middleware('is_able:create-BCI');
+// retrun the bci date
+Route::get('/bci/{id}', [B_C_InterneController::class, 'show'])->middleware('is_able:show-BCI');
+Route::delete('/bci/{id}', [B_C_InterneController::class, 'destroy'])->middleware('is_able:delete-BCI');
+
+// ajouter des produits a un bci 
+Route::post('/bci-add-product', [QunatiteDemandeController::class ,'store']);

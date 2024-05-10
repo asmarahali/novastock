@@ -15,8 +15,8 @@ class CreateQuantityCommandeRequest extends BaseApiRequest
     {
         return [
             'b_c_externe_id' => 'required|exists:b_c_externes,id', 
-            'products' => 'array',
-            'products.*' => 'array',
+            'products' => 'array|required',
+            'products.*' => 'array|required',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1'
         ];

@@ -59,7 +59,7 @@ class QuantiteLivréContoller extends Controller
 
         // $b_livraison->quantites_livres()->create($data);
 
-        // solution 2 - diri whda fihom 
+        // solution 2 
         /*
         $data = array_merge($data, ['b_livraison_id' => $b_livraison->id]);
         $ql = Quantite_livre::create($data); */

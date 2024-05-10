@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('quantite_commandes', function (Blueprint $table) {
+            $table->id(); // primary constraint by default
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('b_c_externe_id');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('b_c_externe_id')->references('id')->on('b_c_externes')->onDelete('cascade');
-            $table->primary(['product_id', 'b_c_externe_id']);
+            $table->unique(['product_id', 'b_c_externe_id']); // unique constrain
 
             $table->unsignedInteger('quantity'); // Add other fields if needed
             

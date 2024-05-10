@@ -24,9 +24,28 @@ class QuantitéCommandController extends Controller
 
         ], 200);
     }
+    public function update(CreateQuantityCommandeRequest $request, $b_c_externe_id)
+{
 
+    foreach ($request->products as $product) {
+        // Find the record with the specific b_c_externe_id and product_id
+        $record = quantité_commande::where('b_c_externe_id', $b_c_externe_id)
+            ->where('product_id', $product['product_id'])
+            ->first();
+
+        if ($record) {
+            // Update the quantity of the found record
+            $record->update(['quantity' => $product['quantity']]);
+        } else {
+            }
+    }
+        return response()->json([
+            'status' => true,
+            'message' => 'Quantities updated successfully for b_c_externe_id: ' . $b_c_externe_id,
+        ], 200);
+    }
     public function show( $b_c_externe_id){
-        dd("hello");
+       
         $quantities = quantité_commande::where('b_c_externe_id', $b_c_externe_id)->get();
 
         // Check if quantities exist
@@ -36,7 +55,7 @@ class QuantitéCommandController extends Controller
                 'message' => 'No quantities found for the provided id_bce.'
             ], 404);
         }
-    
+        
         return response()->json([
             'status' => true,
             'quantities' => $quantities

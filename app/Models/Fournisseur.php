@@ -17,4 +17,8 @@ class Fournisseur extends Model
     {
         return $this->hasMany(Product::class);
     }
+    public function bonsDeCommandeExternes()
+    {
+        return $this->hasMany(BCExterne::class);
+    }
 }

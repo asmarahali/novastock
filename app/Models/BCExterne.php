@@ -19,5 +19,10 @@ class BCExterne extends Model
 
     public function quantite_commandes(){
         return $this->hasMany(quantité_commande::class);
+
+    }
+    public function fournisseur()
+    {
+        return $this->belongsTo(Fournisseur::class);
     }
 }

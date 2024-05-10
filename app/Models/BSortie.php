@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class b_sortie extends Model
+class BSortie extends Model
 {
     use HasFactory;
+    
 }
