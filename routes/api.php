@@ -129,3 +129,5 @@ Route::put('/update-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'up
 
 // changer l'etat de bci 
 Route::patch('/bci/{bc}/send', [B_C_InterneController::class,'send']);
+
+Route::get('/show-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'show']);

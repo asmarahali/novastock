@@ -24,7 +24,7 @@ class QunatiteDemandeController extends Controller
     public function update(CreateQunatitiesDemandeRequest $request, $b_c_interne_id){
 
         foreach ($request->products as $product) {
-            // Find the record with the specific b_c_externe_id and product_id
+        
             $record = quantite_demande::where('b_c_interne_id', $b_c_interne_id)
                 ->where('product_id', $product['product_id'])
                 ->first();
@@ -40,4 +40,22 @@ class QunatiteDemandeController extends Controller
                 'message' => 'Quantities updated successfully for b_c_interne_id: ' . $b_c_interne_id,
             ], 200);
         }
+    public function show( $b_c_interne_id){
+       
+        $quantities = quantite_demande::where('b_c_interne_id', $b_c_interne_id)->get();
+    
+            // Check if quantities exist
+            if ($quantities->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'No quantities found for the provided id_bci.'
+                ], 404);
+            }
+            
+            return response()->json([
+                'status' => true,
+                'quantities' => $quantities
+            ], 200);
+     }
+    
 }
