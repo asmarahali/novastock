@@ -24,8 +24,7 @@ class QuantitéCommandController extends Controller
 
         ], 200);
     }
-    public function update(CreateQuantityCommandeRequest $request, $b_c_externe_id)
-{
+    public function update(CreateQuantityCommandeRequest $request, $b_c_externe_id){
 
     foreach ($request->products as $product) {
         // Find the record with the specific b_c_externe_id and product_id

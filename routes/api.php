@@ -81,7 +81,7 @@ Route::get('/paramètres/{paramètre}', [ParamètreController::class, 'show'])->
 Route::put('/paramètres/{paramètre}', [ParamètreController::class, 'update'])->middleware('is_able:update-paramaters');
 Route::delete('/paramètres/{paramètre}', [ParamètreController::class, 'destroy'])->middleware('is_able:delete-paramaters');
 
-// pour le bon de commande 
+// pour le bon de commande externe
 
 Route::prefix('chapters')->group(function () {
     Route::get('/', [ChapterController::class, 'index']);
@@ -99,8 +99,8 @@ Route::prefix('chapters/{chapter}/articles/{article}/products')->controller(Chap
 });
 
 Route::post('/create-bce', [QuantitéCommandController::class, 'store'])->middleware('is_able:create-bcq');
-Route::get('/show-bc/{b_c_externe_id}',[QuantitéCommandController::class, 'show']);
-Route::put('/update-bc/{b_c_externe_id}',[QuantitéCommandController::class, 'update']);
+Route::get('/show-bce/{b_c_externe_id}',[QuantitéCommandController::class, 'show']);
+Route::put('/update-bce/{b_c_externe_id}',[QuantitéCommandController::class, 'update']);
 
 
 
@@ -116,10 +116,16 @@ Route::patch('bs_de_livraison/{b_livraison}/quantity', [QuantiteLivréContoller:
 
 // Bon de commande interne
 Route::get('/bci', [B_C_InterneController::class, 'index'])->middleware('is_able:read-BCI');
+
 Route::post('/bci', [B_C_InterneController::class, 'store'])->middleware('is_able:create-BCI');
+
 // retrun the bci date
 Route::get('/bci/{id}', [B_C_InterneController::class, 'show'])->middleware('is_able:show-BCI');
 Route::delete('/bci/{id}', [B_C_InterneController::class, 'destroy'])->middleware('is_able:delete-BCI');
 
-// ajouter des produits a un bci 
-Route::post('/bci-add-product', [QunatiteDemandeController::class ,'store']);
+Route::post('/bci-add-product', [QunatiteDemandeController::class ,'store'])->middleware('is_able:add-producrt-to-BCI');
+Route::put('/update-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'update'])->middleware('is_able:update-BCI');
+
+
+// changer l'etat de bci 
+Route::patch('/bci/{bc}/send', [B_C_InterneController::class,'send']);

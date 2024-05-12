@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('b_c_externe_b_livraison', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('b_livraison_id');
             $table->unsignedBigInteger('b_c_externe_id');
             // Ajoutez d'autres colonnes au besoin

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('b_c_internes', function (Blueprint $table) {
             $table->id();
             $table->date('date')->default(now());
+            $table->integer('status')->default(0); 
             $table->timestamps();
         });
     }
