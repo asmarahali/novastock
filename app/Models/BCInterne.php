@@ -34,7 +34,11 @@ class BCInterne extends Model
     use HasFactory;
     protected $fillable = [
         'date',
-        'status'
+        'status',
+         'type',
+    ];
+    protected $casts = [
+        'type' => 'boolean',
     ];
     public function products()
     {

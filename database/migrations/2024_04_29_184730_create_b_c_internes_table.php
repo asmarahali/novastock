@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('date')->default(now());
             $table->integer('status')->default(0); 
+            $table->boolean('type');
             $table->timestamps();
         });
     }

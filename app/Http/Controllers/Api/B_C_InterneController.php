@@ -17,7 +17,7 @@ class B_C_InterneController extends Controller
     {
         $request->validate([
             'date' => 'required',
-         
+            'type' => 'required',
         ]);
 
         $BCE = BCInterne::create($request->all());

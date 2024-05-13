@@ -131,3 +131,6 @@ Route::put('/update-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'up
 Route::patch('/bci/{bc}/send', [B_C_InterneController::class,'send']);
 
 Route::get('/show-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'show']);
+
+//Dashbord of magasinger
+Route::get('/mostDemandedProducts',[QunatiteDemandeController::class, 'mostDemandedProducts']);

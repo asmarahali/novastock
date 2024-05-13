@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\quantite_demande;
+use App\Models\Product;
 use App\Http\Requests\CreateQunatitiesDemandeRequest;
 
 class QunatiteDemandeController extends Controller
@@ -57,5 +58,28 @@ class QunatiteDemandeController extends Controller
                 'quantities' => $quantities
             ], 200);
      }
+     public function mostDemandedProducts() {
+        $mostDemandedProducts = quantite_demande::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+            ->groupBy('product_id')
+            ->orderByDesc('total_quantity')
+            ->take(10)
+            ->get();
     
+        // Fetch product details for each product_id
+        $products = [];
+        foreach ($mostDemandedProducts as $item) {
+            $product = product::find($item->product_id); // Assuming you have a Product model with a 'name' attribute
+            if ($product) {
+                $products[] = [
+                    'name' => $product->name,
+                    'quantity' => $item->total_quantity
+                ];
+            }
+        }
+    
+        return response()->json([
+            'status' => true,
+            'most_demanded_products' => $products
+        ], 200);
+    }
 }
