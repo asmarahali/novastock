@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\QuantitéCommandController;
 use App\Http\Controllers\Api\B_C_ExterneController;
 use App\Http\Controllers\Api\QuantiteLivréContoller;
 use App\Http\Controllers\Api\B_C_InterneController;
+use App\Http\Controllers\Api\B_SortieController;
 use App\Http\Controllers\QunatiteDemandeController;
 
 
@@ -131,6 +132,9 @@ Route::put('/update-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'up
 Route::patch('/bci/{bc}/send', [B_C_InterneController::class,'send']);
 
 Route::get('/show-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'show']);
-
+Route::post('/list-Bs',[B_SortieController::class, 'index_b_sortie']);
+Route::post('/list-Bd',[B_SortieController::class, 'index_b_decharge']);
+Route::get('/create_bs/{b_c_interne_id}',[B_SortieController::class,'insertIntoBSortie']);
 //Dashbord of magasinger
 Route::get('/mostDemandedProducts',[QunatiteDemandeController::class, 'mostDemandedProducts']);
+

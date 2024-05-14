@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('b_c_internes', function (Blueprint $table) {
+        Schema::create('b_decharges', function (Blueprint $table) {
             $table->id();
             $table->date('date')->default(now());
-            $table->integer('status')->default(0); 
-            $table->boolean('type');
             $table->string('observation')->default(null);
             $table->boolean('Recovery')->default(false);
             $table->timestamps();
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('b_c_internes');
+        Schema::dropIfExists('b_decharges');
     }
 };

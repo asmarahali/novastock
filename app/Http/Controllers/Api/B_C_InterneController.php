@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BCInterne;
+use App\Models\BSortie;
+
 class B_C_InterneController extends Controller
 {
     public function index()
@@ -18,6 +20,7 @@ class B_C_InterneController extends Controller
         $request->validate([
             'date' => 'required',
             'type' => 'required',
+            'observation',
         ]);
 
         $BCE = BCInterne::create($request->all());
@@ -26,13 +29,13 @@ class B_C_InterneController extends Controller
     }
     public function show($id)
     {
-        $bcExterne = BCInterne::findOrFail($id);
-        return response()->json($bcExterne, 200);
+        $bcInterne = BCInterne::findOrFail($id);
+        return response()->json($bcInterne, 200);
     }
     public function destroy($id)
     {
-        $bcExterne = BCInterne::findOrFail($id);
-        $bcExterne->delete();
+        $bcInterne = BCInterne::findOrFail($id);
+        $bcInterne->delete();
 
         return response()->json(null, 204);
     }
@@ -72,5 +75,12 @@ class B_C_InterneController extends Controller
         ]);
     }
 
-
+    //public function index_b_sortie (){
+      //  $bsorties = BCInterne::bSortie()->get();
+        //    return response()->json($bsorties, 200);
+       //}
+     //  public function index_b_decharge(){
+       // $bsortie = BCInterne::where('type', false)->where('status', 3)->get();
+         //   return response()->json($bsortie, 200);
+       //}
 }

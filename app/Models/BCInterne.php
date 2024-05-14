@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class BCInterne extends Model
 {
     public $statusRepresentation = [
-        0 => 'not_sent_from_con', // pret for con
-        1 => 'sent_from_con_to_res', // envoye for con, pret for res
-        2 => 'sent_from_res_to_dir', // envoye for res, pret for dir
-        3 => 'sent_from_dir_to_mag', // envoye for dir, pret for mag
+        0 => 'not_sent_from_con', 
+        1 => 'sent_from_con_to_res', 
+        2 => 'sent_from_res_to_dir', 
+        3 => 'sent_from_dir_to_mag',
     ];
     protected $statusesPerRole = [
-        'magazinier' => [
+        'magasinier' => [
             'sent_from_dir_to_mag' => 'pret'
         ],
         'directeur' => [
@@ -35,7 +36,10 @@ class BCInterne extends Model
     protected $fillable = [
         'date',
         'status',
-         'type',
+        'type',
+        'observation',
+        'Recovery',
+
     ];
     protected $casts = [
         'type' => 'boolean',
@@ -56,16 +60,21 @@ class BCInterne extends Model
     public function getStatusAttribute($value){
         return $this->statusRepresentation[$value];
     }
-    
    
     public function getStatus(){
-        // $role = auth()->user()->role; // temp
-        // $roleName = $role->name;
-        $roleName = 'directeur';
+         $role = auth()->user()->role; 
+         $roleName = $role->name;
+       
 
         return array_key_exists($this->status, $this->statusesPerRole[$roleName])
         ? $this->statusesPerRole[$roleName][$this->status]
         : 'not_accesible';
     }
 
+    public function scopeBSortie(Builder $builder){
+        return $builder->where('type', true)->where('status', 3);
+    }
+    public function scopeBDecharge(Builder $builder){
+        return $builder->where('type', false)->where('status', 3);
+    }
 }
