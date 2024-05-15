@@ -11,24 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quantite_demandes', function (Blueprint $table) {
+        Schema::create('quantite_decharges', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('b_c_interne_id');
+            $table->unsignedBigInteger('b_decharge_id');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('b_c_interne_id')->references('id')->on('b_c_internes')->onDelete('cascade');
-            $table->unique(['product_id', 'b_c_interne_id']);
+            $table->foreign('b_decharge_id')->references('id')->on('b_decharges')->onDelete('cascade');
+            $table->unique(['product_id', 'b_decharge_id']); 
 
             $table->unsignedInteger('quantity'); 
-            }); 
+            
+        });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('quantite_decharges');
     }
 };

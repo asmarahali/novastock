@@ -117,7 +117,6 @@ Route::patch('bs_de_livraison/{b_livraison}/quantity', [QuantiteLivréContoller:
 
 // Bon de commande interne
 Route::get('/bci', [B_C_InterneController::class, 'index'])->middleware('is_able:read-BCI');
-
 Route::post('/bci', [B_C_InterneController::class, 'store'])->middleware('is_able:create-BCI');
 
 // retrun the bci date
@@ -134,7 +133,7 @@ Route::patch('/bci/{bc}/send', [B_C_InterneController::class,'send']);
 Route::get('/show-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'show']);
 Route::post('/list-Bs',[B_SortieController::class, 'index_b_sortie']);
 Route::post('/list-Bd',[B_SortieController::class, 'index_b_decharge']);
-Route::get('/create_bs/{b_c_interne_id}',[B_SortieController::class,'insertIntoBSortie']);
+Route::get('/create_BDorBS/{b_c_interne_id}',[B_SortieController::class,'createBSorBD']);
 //Dashbord of magasinger
 Route::get('/mostDemandedProducts',[QunatiteDemandeController::class, 'mostDemandedProducts']);
 
