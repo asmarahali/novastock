@@ -19,7 +19,7 @@ use App\Http\Controllers\Api\QuantiteLivréContoller;
 use App\Http\Controllers\Api\B_C_InterneController;
 use App\Http\Controllers\Api\B_SortieController;
 use App\Http\Controllers\QunatiteDemandeController;
-
+use App\Http\Controllers\Api\QuantiteSortieController;
 
 Route::get('/products', [ProductController::class, 'index'])->middleware('is_able:read-product');
 Route::post('/products', [ProductController::class, 'store'])->middleware('is_able:create-product');
@@ -125,7 +125,7 @@ Route::delete('/bci/{id}', [B_C_InterneController::class, 'destroy'])->middlewar
 
 Route::post('/bci-add-product', [QunatiteDemandeController::class ,'store'])->middleware('is_able:add-producrt-to-BCI');
 Route::put('/update-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'update'])->middleware('is_able:update-BCI');
-
+Route::get('/BS/{b_sortie_id}',[QuantiteSortieController::class, 'show']);
 
 // changer l'etat de bci 
 Route::patch('/bci/{bc}/send', [B_C_InterneController::class,'send']);
@@ -133,7 +133,16 @@ Route::patch('/bci/{bc}/send', [B_C_InterneController::class,'send']);
 Route::get('/show-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'show']);
 Route::post('/list-Bs',[B_SortieController::class, 'index_b_sortie']);
 Route::post('/list-Bd',[B_SortieController::class, 'index_b_decharge']);
-Route::get('/create_BDorBS/{b_c_interne_id}',[B_SortieController::class,'createBSorBD']);
+Route::post('/create_BDorBS/{b_c_interne_id}',[B_SortieController::class,'createBSorBD']);
+
 //Dashbord of magasinger
 Route::get('/mostDemandedProducts',[QunatiteDemandeController::class, 'mostDemandedProducts']);
+Route::post('/nbrOfBci',[B_C_InterneController::class,'countBci']);
+Route::post('/nbrOfBS',[B_C_InterneController::class,'countBS']);
+Route::post('/nbrOfBD',[B_C_InterneController::class,'countBD']);
 
+//Dashbord of Admin
+Route::post('/nbrOfuser',[UserController::class, 'nbrOfUser']);
+Route::post('/nbrOfActiveuser',[UserController::class, 'nbrOfActiveUser']);
+Route::post('/nbrOfNoActiveuser',[UserController::class, 'nbrOfNoActiveUser']);
+Route::post('/nbrOfStructure',[UserController::class, 'nbrOfStructure']);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BCInterne;
-use App\Models\BSortie;
+
 
 class B_C_InterneController extends Controller
 {
@@ -75,6 +75,21 @@ class B_C_InterneController extends Controller
         ]);
     }
 
+   public function countBci(){
+     $bci = BCInterne::where('status', 3)->count();
+     dd($bci);
+     return $bci;
+   }
+   public function countBS(){
+    $bci = BCInterne::where('status', 3)->where('type', 0)->count();
+    dd($bci);
+    return $bci;
+  }
+  public function countBD(){
+    $bci = BCInterne::where('status', 3)->where('type', 1)->count();
+    dd($bci);
+    return $bci;
+  }
     //public function index_b_sortie (){
       //  $bsorties = BCInterne::bSortie()->get();
         //    return response()->json($bsorties, 200);

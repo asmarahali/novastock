@@ -118,8 +118,19 @@ class UserController extends Controller
             "data" => []
         ]);
     }
-    
-
+    public function nbrOfUser(){
+        $users = User::count();
+        return $users;
+    }
+    public function nbrOfActiveUser(){
+        $users = User::where('is_active',1)->count();
        
+        return $users;
+    }
+    public function nbrOfNoActiveUser(){
+        $users = User::where('is_active',0)->count();
+        
+        return $users;
+    } 
 }
 
