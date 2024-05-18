@@ -21,4 +21,8 @@ class Fournisseur extends Model
     {
         return $this->hasMany(BCExterne::class);
     }
+    public function bReceptions()
+    {
+        return $this->hasMany(B_Reception::class, 'fournisseur_id');
+    }
 }

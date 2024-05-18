@@ -18,6 +18,7 @@ class B_C_ExterneController extends Controller
     {
         $request->validate([
             'date' => 'required',
+            'fournisseur_id' =>'required',
             
         ]);
 

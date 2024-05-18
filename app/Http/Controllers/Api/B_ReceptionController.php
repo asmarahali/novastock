@@ -19,19 +19,16 @@ class B_ReceptionController extends Controller
     
     public function create_br(Request $request, $id_b_c_externe)
     {
-        // Check if the b_c_externe_id exists in the b_c_externe table
         if (!BCExterne::where('id', $id_b_c_externe)->exists()) {
             return response()->json(['message' => 'Invalid b_c_externe_id'], 400);
         }
-    
-        $validatedData = $request->validate([
-            'date' => 'required|date',
-        ]);
-    
-        // Create the B_Reception record
+        
         $bReception = B_Reception::create([
-            'date' => $validatedData['date'],
+            'date' => now(),
             'b_c_externe_id' => $id_b_c_externe,
+            'fournisseur_id' =>DB::table('b_c_externes')
+            ->where('id', $id_b_c_externe)
+            ->value('fournisseur_id') ,
         ]);
         $ListOfProducts = DB::table('quantite_commandes')
         ->where('b_c_externe_id', $id_b_c_externe)->get();
@@ -54,20 +51,11 @@ class B_ReceptionController extends Controller
     
         return response()->json([], 204);
     }
-    public function show ($b_reception_id){
-        $quantities = quantite_livre::where('b_reception_id', $b_reception_id)->get();
+    public function show($id)
+    {
+        $br = B_Reception::findOrFail($id);
 
-        // Check if quantities exist
-        if ($quantities->isEmpty()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'No quantities found for the provided id_bce.'
-            ], 404);
-        }
-        
-        return response()->json([
-            'status' => true,
-            'quantities' => $quantities
-        ], 200);
+        return response()->json($br, 200);
     }
  }
+

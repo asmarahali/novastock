@@ -9,7 +9,7 @@ class BCExterne extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'date',
+        'date','fournisseur_id'
     ];
     public function products()
     {
@@ -21,8 +21,9 @@ class BCExterne extends Model
         return $this->hasMany(quantité_commande::class);
 
     }
+    
     public function fournisseur()
     {
-        return $this->belongsTo(Fournisseur::class);
+        return $this->belongsTo(Fournisseur::class, 'fournisseur_id');
     }
 }

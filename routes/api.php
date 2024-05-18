@@ -54,7 +54,7 @@ Route::prefix('fournisseurs')->group(function () {
     Route::delete('//{id}', [FournisseurController::class, 'destroy'])->middleware('is_able:delete-fournisseur');
 });
 
-Route::post('/auth/register', [UserController::class, 'createUser'])->middleware('is_able:create-user');
+Route::post('/auth/register', [UserController::class, 'createUser']);//->middleware('is_able:create-user');
 Route::post('/auth/login', [UserController::class, 'login'])->name('login');
 
 
@@ -109,11 +109,11 @@ Route::get('/show-bce/{b_c_externe_id}',[QuantitéCommandController::class, 'sho
 Route::put('/update-bce/{b_c_externe_id}',[QuantitéCommandController::class, 'update']);
 
 
+ 
 
-// les dates & liste 
-Route::get('/bce', [B_C_ExterneController::class, 'index'])->middleware('is_able:read-BCE');
+Route::get('/bce', [B_C_ExterneController::class, 'index'])->middleware('is_able:read-BCE');// liste of bce
 Route::post('/bce', [B_C_ExterneController::class, 'store'])->middleware('is_able:create-BCE');
-Route::get('/bce/{id}', [B_C_ExterneController::class, 'show'])->middleware('is_able:show-BCE');
+Route::get('/bce/{id}', [B_C_ExterneController::class, 'show'])->middleware('is_able:show-BCE');// id , date , id_fournisseur
 Route::delete('/bce/{id}', [B_C_ExterneController::class, 'destroy'])->middleware('is_able:delete-BCE');
 
 // bon de reception
@@ -121,7 +121,9 @@ Route::patch('bs_de_livraison/{b_livraison}/quantity', [QuantiteLivréContoller:
 Route::get('/liste-br', [B_ReceptionController::class, 'index']); 
 Route::post('/create-br/{id_b_c_externe}', [B_ReceptionController::class, 'create_br']);  
 Route::delete('/delete/{id_BR}', [B_ReceptionController::class, 'destroy']);
-Route::get('/afficher-br/{id_br}',[B_ReceptionController::class,'show']);
+Route::get('/afficher-br/{id_br}',[QuantiteLivréContoller::class,'show']);// show quntité recus
+Route::get('/show_br/{id_br}',[B_ReceptionController::class,'show']); // recuperier le id br ,id bce ,id_fournisseur
+
 
 // Bon de commande interne
 Route::get('/bci', [B_C_InterneController::class, 'index'])->middleware('is_able:read-BCI');
@@ -142,6 +144,7 @@ Route::get('/show-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'show
 Route::post('/list-Bs',[B_SortieController::class, 'index_b_sortie']);
 Route::post('/list-Bd',[B_SortieController::class, 'index_b_decharge']);
 Route::post('/create_BDorBS/{b_c_interne_id}',[B_SortieController::class,'createBSorBD']);
+Route::post('/RetourDeProduit/{b_Decharge_id}',[B_SortieController::class,'RetourDeProduit']);
 
 //Dashbord of magasinger
 Route::get('/mostDemandedProducts',[QunatiteDemandeController::class, 'mostDemandedProducts']);
@@ -154,3 +157,5 @@ Route::post('/nbrOfuser',[UserController::class, 'nbrOfUser']);
 Route::post('/nbrOfActiveuser',[UserController::class, 'nbrOfActiveUser']);
 Route::post('/nbrOfNoActiveuser',[UserController::class, 'nbrOfNoActiveUser']);
 Route::post('/nbrOfStructure',[UserController::class, 'nbrOfStructure']);
+Route::get('/login-frequency', [UserController::class, 'getLoginFrequency']);
+Route::get('/LastestLogins', [UserController::class, 'LastTwoLogins']);

@@ -11,7 +11,8 @@ class B_Reception extends Model
     protected $table = 'b_receptions';
     protected $fillable = [
         'date',
-        'b_c_externe_id'
+        'b_c_externe_id',
+        'fournisseur_id'
     ];
     public function products()
     {
@@ -35,5 +36,9 @@ class B_Reception extends Model
     */
     public function b_c_externe(){
         return $this->belongsTo(BCExterne::class, 'b_c_externe_id');
+    }
+    public function fournisseur()
+    {
+        return $this->belongsTo(Fournisseur::class, 'fournisseur_id');
     }
 }

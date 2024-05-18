@@ -12,9 +12,11 @@ return new class extends Migration
             $table->id();
             $table->date('date')->default(now());
             $table->unsignedBigInteger('b_c_externe_id');
+            $table->unsignedBigInteger('fournisseur_id');
             $table->timestamps();
 
             $table->foreign('b_c_externe_id')->references('id')->on('b_c_externes')->onDelete('cascade');
+            $table->foreign('fournisseur_id')->references('id')->on('fournisseurs')->onDelete('cascade'); 
         });
     }
 

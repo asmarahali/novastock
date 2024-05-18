@@ -81,4 +81,25 @@ class B_SortieController extends Controller
         ]);
       }
    }
+   public function RetourDeProduit($id_decharge){
+      if (!BDecharge::where('id', $id_decharge)->exists()) {
+        return response()->json(['message' => 'Invalid b_decharge_id'], 400);
+     }
+     $Recovery = DB::table('b_decharges')
+     ->where('id', $id_decharge)
+     ->value('Recovery');
+     if ($Recovery == 0){
+      $Recovery = 1;
+      $ListOfProducts = DB::table('quantite_decharges')
+          ->where('b_decharge_id', $id_decharge)->get();
+          foreach ($ListOfProducts as $product) {  
+            $p = Product::find($product['product_id']);
+            $p->update(['quantity' => $p->quantity + $product['quantity']]);
+         
+         }
+     }else{
+      return response()->json(['message '=> 'there is no quantity to return']);
+     }
+     
+   }
 }

@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('b_c_externes', function (Blueprint $table) {
             $table->id();
             $table->date('date')->default(now());
+            $table->unsignedBigInteger('fournisseur_id');
             $table->timestamps();
+            $table->foreign('fournisseur_id')->references('id')->on('fournisseurs')->onDelete('cascade'); 
+   
         });
     }
 

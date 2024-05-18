@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Login;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Carbon\Carbon;
 use App\Http\Requests\CreateUserRequest;
 
 class UserController extends Controller
@@ -78,12 +79,18 @@ class UserController extends Controller
             if(Hash::check($request->password, $user->password)){
                 // Password matched
                 $token = $user->createToken("mytoken")->plainTextToken;
+                Login::create([
+                    'user_id' => $user->id,
+                ]);
                 return response()->json([
                     "status" => true,
                     "message" => "User logged in",
                     "token" => $token,
                     "data" => []
                 ]);
+               
+                
+                
             }else{
                 return response()->json([
                     "status" => false,
@@ -142,5 +149,45 @@ class UserController extends Controller
         
         return $users;
     } 
+
+    public function getLoginFrequency(Request $request)
+    {
+        $year = $request->query('year', date('Y'));
+
+        $data = Login::selectRaw('MONTH(created_at) as month, COUNT(*) as logins')
+            ->whereYear('created_at', $year)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get()
+            ->map(function($item) {
+                return [
+                    'month' => date('M', mktime(0, 0, 0, $item->month, 10)),
+                    'logins' => $item->logins
+                ];
+            });
+
+        return response()->json([
+            'year' => $year,
+            'data' => $data
+        ]);
+    }
+    function LastTwoLogins() {
+        $lastTwoLogins = Login::select('user_id', 'created_at')
+        ->distinct('user_id')
+        ->orderBy('created_at', 'desc')
+        ->take(2)
+        ->get();
+    
+        return $lastTwoLogins->map(function ($login) {
+            $user = User::find($login->user_id); 
+            $roles = $user->roles->pluck('name')->toArray();
+            return [
+                'nom' => $login->user->firstname,
+                'prenom'=>$login->user->lastname,
+                'email' => $login->user->email,
+               'roles' => $roles,
+            ];
+        });
+    }
 }
 

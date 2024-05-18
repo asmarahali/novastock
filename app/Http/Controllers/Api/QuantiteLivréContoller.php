@@ -36,12 +36,12 @@ class QuantiteLivréContoller extends Controller
         ]);
         foreach ($data as $p) {          
             $exists = Quantite_livre::where('product_id', $p['product_id'])
-            ->where('b_livraison_id', $b_livraison->id)
+            ->where('b_reception_id', $b_livraison->id)
             ->exists();
 
             if($exists){
                $ql = Quantite_livre::where('product_id', $p['product_id'])
-               ->where('b_livraison_id', $b_livraison->id)
+               ->where('b_reception_id', $b_livraison->id)
                ->first();
 
                $ql->update(['quantity' => (int) $p['quantity'] + $ql->quantity]);
@@ -52,7 +52,7 @@ class QuantiteLivréContoller extends Controller
             Quantite_livre::create(
                 [
                     'product_id' => $p['product_id'],
-                    'b_livraison_id' => $b_livraison->id,
+                    'b_reception_id' => $b_livraison->id,
                     'quantity' => $p['quantity']
                 ]
             );
@@ -77,6 +77,21 @@ class QuantiteLivréContoller extends Controller
 
         return response()->json([
             'new_quantities' => $products->pluck('new_quantity', 'id')
+        ], 200);
+    }
+    public function show ($b_reception_id){
+        $quantities = quantite_livre::where('b_reception_id', $b_reception_id)->get();
+
+        if ($quantities->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No quantities found for the provided id_bce.'
+            ], 404);
+        }
+        
+        return response()->json([
+            'status' => true,
+            'quantities' => $quantities
         ], 200);
     }
 }
