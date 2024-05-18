@@ -17,7 +17,7 @@ class B_ReceptionController extends Controller
         return response()->json($breception, 200);
     } 
     
-    public function store(Request $request, $id_b_c_externe)
+    public function create_br(Request $request, $id_b_c_externe)
     {
         // Check if the b_c_externe_id exists in the b_c_externe table
         if (!BCExterne::where('id', $id_b_c_externe)->exists()) {
@@ -46,5 +46,28 @@ class B_ReceptionController extends Controller
         } else {
             return response()->json(['message' => 'Failed to create B_Reception'], 500);
         }
-  }
-}
+    }
+    public function destroy($id)
+    {
+        $BR = B_Reception::findOrFail($id);
+        $BR->delete();
+    
+        return response()->json([], 204);
+    }
+    public function show ($b_reception_id){
+        $quantities = quantite_livre::where('b_reception_id', $b_reception_id)->get();
+
+        // Check if quantities exist
+        if ($quantities->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No quantities found for the provided id_bce.'
+            ], 404);
+        }
+        
+        return response()->json([
+            'status' => true,
+            'quantities' => $quantities
+        ], 200);
+    }
+ }

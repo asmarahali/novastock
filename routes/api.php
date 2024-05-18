@@ -54,8 +54,8 @@ Route::prefix('fournisseurs')->group(function () {
     Route::delete('//{id}', [FournisseurController::class, 'destroy'])->middleware('is_able:delete-fournisseur');
 });
 
-Route::post('/auth/register', [UserController::class, 'createUser']);//->middleware('is_able:create-user');
-Route::post('/auth/login', [UserController::class, 'login']);//->name('login');
+Route::post('/auth/register', [UserController::class, 'createUser'])->middleware('is_able:create-user');
+Route::post('/auth/login', [UserController::class, 'login'])->name('login');
 
 
 Route::group([
@@ -118,9 +118,10 @@ Route::delete('/bce/{id}', [B_C_ExterneController::class, 'destroy'])->middlewar
 
 // bon de reception
 Route::patch('bs_de_livraison/{b_livraison}/quantity', [QuantiteLivréContoller::class, 'store']);
-Route::get('/liste-bcr', [B_ReceptionController::class, 'index']); 
-Route::post('/create-bcr/{id_b_c_externe}', [B_ReceptionController::class, 'store']);  
-
+Route::get('/liste-br', [B_ReceptionController::class, 'index']); 
+Route::post('/create-br/{id_b_c_externe}', [B_ReceptionController::class, 'create_br']);  
+Route::delete('/delete/{id_BR}', [B_ReceptionController::class, 'destroy']);
+Route::get('/afficher-br/{id_br}',[B_ReceptionController::class,'show']);
 
 // Bon de commande interne
 Route::get('/bci', [B_C_InterneController::class, 'index'])->middleware('is_able:read-BCI');
