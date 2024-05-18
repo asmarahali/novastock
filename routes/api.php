@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\StructureController;
+
 use App\Http\Controllers\Api\FournisseurController;
 use App\Http\Controllers\Api\ChapterController;
 use App\Http\Controllers\Api\ArticleController;
@@ -20,6 +20,11 @@ use App\Http\Controllers\Api\B_C_InterneController;
 use App\Http\Controllers\Api\B_SortieController;
 use App\Http\Controllers\QunatiteDemandeController;
 use App\Http\Controllers\Api\QuantiteSortieController;
+use App\Http\Controllers\Api\StructureController;
+use App\Http\Controllers\Api\B_ReceptionController;
+// structure 
+Route::post('/structure', [StructureController::class, 'store']);
+Route::put('/structure/{id}', [StructureController::class, 'update']);
 
 Route::get('/products', [ProductController::class, 'index'])->middleware('is_able:read-product');
 Route::post('/products', [ProductController::class, 'store'])->middleware('is_able:create-product');
@@ -50,7 +55,7 @@ Route::prefix('fournisseurs')->group(function () {
 });
 
 Route::post('/auth/register', [UserController::class, 'createUser']);//->middleware('is_able:create-user');
-Route::post('/auth/login', [UserController::class, 'login'])->name('login');
+Route::post('/auth/login', [UserController::class, 'login']);//->name('login');
 
 
 Route::group([
@@ -99,20 +104,22 @@ Route::prefix('chapters/{chapter}/articles/{article}/products')->controller(Chap
     Route::get('/{product}', 'show');
 });
 
-Route::post('/create-bce', [QuantitéCommandController::class, 'store'])->middleware('is_able:create-bcq');
+Route::post('/create-bce', [QuantitéCommandController::class, 'store']);//->middleware('is_able:create-bcq');
 Route::get('/show-bce/{b_c_externe_id}',[QuantitéCommandController::class, 'show']);
 Route::put('/update-bce/{b_c_externe_id}',[QuantitéCommandController::class, 'update']);
 
 
 
-
+// les dates & liste 
 Route::get('/bce', [B_C_ExterneController::class, 'index'])->middleware('is_able:read-BCE');
 Route::post('/bce', [B_C_ExterneController::class, 'store'])->middleware('is_able:create-BCE');
 Route::get('/bce/{id}', [B_C_ExterneController::class, 'show'])->middleware('is_able:show-BCE');
 Route::delete('/bce/{id}', [B_C_ExterneController::class, 'destroy'])->middleware('is_able:delete-BCE');
 
-// bon de livraison
+// bon de reception
 Route::patch('bs_de_livraison/{b_livraison}/quantity', [QuantiteLivréContoller::class, 'store']);
+Route::get('/liste-bcr', [B_ReceptionController::class, 'index']); 
+Route::post('/create-bcr/{id_b_c_externe}', [B_ReceptionController::class, 'store']);  
 
 
 // Bon de commande interne

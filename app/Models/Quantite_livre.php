@@ -10,7 +10,7 @@ class Quantite_livre extends Model
     use HasFactory;
     protected $table = 'quantite_livre';
     protected $fillable = [
-        'b_livraison_id',
+        'b_reception_id',
         'quantity',
         'product_id'
     ];

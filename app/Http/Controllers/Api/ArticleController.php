@@ -35,7 +35,7 @@ class ArticleController extends Controller
         $request->validate([
             'chapiter_id' => 'required|exists:chapters,id',
             'label' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            
         ]);
 
         $article = Article::create($request->all());
@@ -68,7 +68,7 @@ class ArticleController extends Controller
         $request->validate([
             'chapiter_id' => 'required|exists:chapters,id',
             'label' => 'required|string|max:255',
-            'description' => 'nullable|string',
+           
         ]);
 
         $article->update($request->all());

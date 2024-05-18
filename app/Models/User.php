@@ -40,26 +40,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function scopeRSR($query)
-    {
-        return $query->where('role', 'RSR');
-    }
-
-    // this should not be here, 
-    // ediha l user model 
+   
+    public function structure()
+  {
+     return $this->hasMany(Structure::class, 'responsible_id');
+  }
+   
+    public function scopeResponsibles($query)
+  {
+     return $query->whereHas('roles', function ($query) {
+     $query->where('name', 'Responsable_de_la_structure_de_rattachement');
+     });
+  }
+   
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_role');
     }
-
-
     /**
      * list permissions for this user
     */
     public function getPermissionsAttribute(){
-        return $this->roles() // get me this user's roles
-        ->with('permissions') // get permissions with each role
-        ->get() // execute 
+        return $this->roles() 
+        ->with('permissions') 
+        ->get() 
         ->pluck('permissions') // pluck only permissions attribute from all records
         ->flatten() // flatten results and get me only permissions collections
         ->unique(); // filter unique records (since many roles can share the same permission)

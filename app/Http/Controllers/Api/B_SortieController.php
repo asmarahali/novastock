@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\BSortie;
 use App\Models\BDecharge;
-use App\Models\BCInterne;
+use App\Models\Product;
 use App\Models\Quantite_Decharge;
 use App\Models\quantite_sortie;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
@@ -47,7 +46,10 @@ class B_SortieController extends Controller
         'product_id'=> $product->product_id,
         'b_sortie_id'=> $bSortie->id,
         'quantity'=>$product->quantity,
-        ]);}
+        ]);
+        $p = Product::find($product['product_id']);
+        $p->update(['quantity' => $p->quantity - $product['quantity']]);
+     }
            
        }else if($status == 3 and $type== 1) {
          $bDecharge = BDecharge::create([
@@ -69,6 +71,9 @@ class B_SortieController extends Controller
             'b_decharge_id' => $bDecharge->id,
             'quantity'=>$product->quantity,
             ]);
+            $p = Product::find($product['product_id']);
+            $p->update(['quantity' => $p->quantity - $product['quantity']]);
+         
          }
           DB::table('b_decharge_b_c_interne')->insert([
             'b_decharge_id' => $bDecharge->id,

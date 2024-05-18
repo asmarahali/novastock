@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class B_livraison extends Model
+class B_Reception extends Model
 {
     use HasFactory;
+    protected $table = 'b_receptions';
     protected $fillable = [
         'date',
+        'b_c_externe_id'
     ];
     public function products()
     {

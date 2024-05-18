@@ -20,7 +20,9 @@ class UserController extends Controller
      */
     public function createUser(CreateUserRequest $request)
     {
-        
+        //$data = $request->validated();
+        //$data['password'] = Hash::make($data['password']);
+
         $user = User::create($request->except('roles_ids'));
         $user->roles()->attach($request->roles_ids);
     
@@ -62,7 +64,7 @@ class UserController extends Controller
     }
     public function login(Request $request){
 
-        // Validation
+    
         $request->validate([
             "email" => "required|email|string",
             "password" => "required"
@@ -110,14 +112,22 @@ class UserController extends Controller
     }
 
     // GET [Auth: Token]
-    public function logout(){
-        Auth::user()->tokens()->delete();
-         return response()->json([
+   // public function logout(){
+   //     Auth::User()->tokens()->delete();
+     //    return response()->json([
+       //     "status" => true,
+         //   "message" => "User logged out",
+           // "data" => []
+       // ]);
+    //}
+    public function logout( Request $request){
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
             "status" => true,
             "message" => "User logged out",
             "data" => []
         ]);
-    }
+}
     public function nbrOfUser(){
         $users = User::count();
         return $users;

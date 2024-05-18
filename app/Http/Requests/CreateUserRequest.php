@@ -22,7 +22,7 @@ class CreateUserRequest extends FormRequest
             'is_active' => 'nullable|boolean',
             'password' => 'required',
 
-            // roles_ids must be attached
+           
             'roles_ids' => 'required',
             'roles_ids.*' => 'required|exists:roles,id', // one role at least must be attached, role must be real record
 

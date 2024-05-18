@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Structure extends Model
 { 
      use HasFactory;
-    protected $fillable = [
-        'Libelle', 
-        'Résponsable'
-    ];
-    public function responsable()
-    {
-        return $this->belongsTo(User::class, 'responsable_id');
-    }
+     
+         protected $fillable = [
+             'name',
+             'responsible_id',
+         ];
+     
+         public function responsible()
+         {
+             return $this->belongsTo(User::class, 'responsible_id');
+         }
 }
+     

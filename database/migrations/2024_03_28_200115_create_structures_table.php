@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('structures', function (Blueprint $table) {
+           
             $table->id();
-            $table->unsignedBigInteger('responsable_id')->nullable();
-            $table->foreign('responsable_id')->references('id')->on('users')->onDelete('set null');
-            $table->string('Libelle')->unique() ;
+            $table->string('name')->unique();
+            $table->foreignId('responsible_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
