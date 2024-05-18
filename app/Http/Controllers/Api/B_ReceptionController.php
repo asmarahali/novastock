@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\B_Reception;
 use App\Models\BCExterne;
+use App\Models\Quantite_livre;
+use Illuminate\Support\Facades\DB;
 class B_ReceptionController extends Controller
 {
     public function index()
@@ -31,12 +33,18 @@ class B_ReceptionController extends Controller
             'date' => $validatedData['date'],
             'b_c_externe_id' => $id_b_c_externe,
         ]);
-    
-        if ($bReception) {
+        $ListOfProducts = DB::table('quantite_commandes')
+        ->where('b_c_externe_id', $id_b_c_externe)->get();
+        foreach ($ListOfProducts as $product) {  
+            $QS =  Quantite_livre::create([
+            'product_id'=> $product->product_id,
+            'b_reception_id'=> $bReception->id,
+            'quantity'=> 0,
+            ]);
+        } if ($bReception) {
             return response()->json(['message' => 'B_Reception created successfully'], 201);
         } else {
             return response()->json(['message' => 'Failed to create B_Reception'], 500);
         }
-    }
-    
+  }
 }
