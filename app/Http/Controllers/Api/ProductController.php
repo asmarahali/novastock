@@ -92,16 +92,9 @@ class ProductController extends Controller
         $product->delete();
         return response()->json(null, 204);
     }
-
-    public function index1(Chapter $chapter, Article $article)
-    {
-        $products = $article->products;
-        return response()->json($products);
-    }
-
-    public function show1(Chapter $chapter, Article $article, Product $product)
-    {
-        return response()->json($product);
+    public function nbrofproduct (){
+        $products = Product::count();
+        return $products;
     }
 }
 

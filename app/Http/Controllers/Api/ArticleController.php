@@ -88,7 +88,9 @@ class ArticleController extends Controller
 
         return response()->json([], 204);
     }
-   
-
+    public function nbrofArticles (){
+        $articles = Article::count();
+        return $articles;
+    }
    
 }

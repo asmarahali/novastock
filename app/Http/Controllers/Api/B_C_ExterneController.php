@@ -38,5 +38,8 @@ class B_C_ExterneController extends Controller
 
         return response()->json(null, 204);
     }
-
+    public function nbrofBce (){
+        $bce = BCExterne::count();
+        return $bce;
+    }
 }

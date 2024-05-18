@@ -31,7 +31,7 @@ class QunatiteDemandeController extends Controller
                 ->first();
     
             if ($record) {
-                // Update the quantity of the found record
+                
                 $record->update(['quantity' => $product['quantity']]);
             } else {
                 }
@@ -45,7 +45,6 @@ class QunatiteDemandeController extends Controller
        
         $quantities = quantite_demande::where('b_c_interne_id', $b_c_interne_id)->get();
     
-            // Check if quantities exist
             if ($quantities->isEmpty()) {
                 return response()->json([
                     'status' => false,
@@ -62,13 +61,12 @@ class QunatiteDemandeController extends Controller
         $mostDemandedProducts = quantite_demande::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('product_id')
             ->orderByDesc('total_quantity')
-            ->take(10)
+            ->take(3)
             ->get();
     
-        // Fetch product details for each product_id
         $products = [];
         foreach ($mostDemandedProducts as $item) {
-            $product = product::find($item->product_id); // Assuming you have a Product model with a 'name' attribute
+            $product = product::find($item->product_id); 
             if ($product) {
                 $products[] = [
                     'name' => $product->name,

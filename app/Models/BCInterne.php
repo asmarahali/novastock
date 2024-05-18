@@ -77,4 +77,8 @@ class BCInterne extends Model
     public function scopeBDecharge(Builder $builder){
         return $builder->where('type', false)->where('status', 3);
     }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'User_id');
+    }
 }

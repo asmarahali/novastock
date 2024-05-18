@@ -18,10 +18,12 @@ return new class extends Migration
             $table->boolean('type');
             $table->string('observation')->default(null);
             $table->boolean('Recovery')->default(false);
-            $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+           $table->timestamps();
+           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
         });
     }
-
     /**
      * Reverse the migrations.
      */

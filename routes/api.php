@@ -148,14 +148,23 @@ Route::post('/RetourDeProduit/{b_Decharge_id}',[B_SortieController::class,'Retou
 
 //Dashbord of magasinger
 Route::get('/mostDemandedProducts',[QunatiteDemandeController::class, 'mostDemandedProducts']);
-Route::post('/nbrOfBci',[B_C_InterneController::class,'countBci']);
-Route::post('/nbrOfBS',[B_C_InterneController::class,'countBS']);
-Route::post('/nbrOfBD',[B_C_InterneController::class,'countBD']);
+Route::get('/nbrOfBci',[B_C_InterneController::class,'countBci']);
+Route::get('/nbrOfBS',[B_C_InterneController::class,'countBS']);
+Route::get('/nbrOfBD',[B_C_InterneController::class,'countBD']);
 
 //Dashbord of Admin
-Route::post('/nbrOfuser',[UserController::class, 'nbrOfUser']);
-Route::post('/nbrOfActiveuser',[UserController::class, 'nbrOfActiveUser']);
-Route::post('/nbrOfNoActiveuser',[UserController::class, 'nbrOfNoActiveUser']);
-Route::post('/nbrOfStructure',[UserController::class, 'nbrOfStructure']);
+Route::get('/nbrOfuser',[UserController::class, 'nbrOfUser']);
+Route::get('/nbrOfActiveuser',[UserController::class, 'nbrOfActiveUser']);
+Route::get('/nbrOfNoActiveuser',[UserController::class, 'nbrOfNoActiveUser']);
+Route::get('/nbrOfStructure',[UserController::class, 'nbrOfStructure']);
 Route::get('/login-frequency', [UserController::class, 'getLoginFrequency']);
 Route::get('/LastestLogins', [UserController::class, 'LastTwoLogins']);
+
+//Dashbord of ASA
+Route::get('/nbrofChapter',[ChapterController::class, 'nbrofChapter']);
+Route::get('/nbrofArticle',[ArticleController::class, 'nbrofArticle']);
+Route::get('/nbrofProduct',[ProductController::class, 'nbrofProduct']);
+Route::get('/nbrofBCE',[B_C_ExterneController::class, 'nbrofBce']);
+Route::get('/nbrofBCE',[B_C_ExterneController::class,'mostCommandedProducts']);
+Route::get('/product_commanded_per_year/{product_id}',[QuantitéCommandController::class, 'yearly']);
+Route::get('/quantité_livrée/{bce_id}',[QuantitéCommandController::class, 'totalQuantity']);

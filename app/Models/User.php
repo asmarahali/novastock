@@ -68,4 +68,8 @@ class User extends Authenticatable
         ->flatten() // flatten results and get me only permissions collections
         ->unique(); // filter unique records (since many roles can share the same permission)
     }
+    public function bCommandeinterne()
+    {
+        return $this->hasMany(BCInterne::class, 'user_id');
+    }
 }
