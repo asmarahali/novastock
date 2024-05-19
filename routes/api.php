@@ -168,3 +168,4 @@ Route::get('/nbrofBCE',[B_C_ExterneController::class, 'nbrofBce']);
 Route::get('/nbrofBCE',[B_C_ExterneController::class,'mostCommandedProducts']);
 Route::get('/product_commanded_per_year/{product_id}',[QuantitéCommandController::class, 'yearly']);
 Route::get('/quantité_livrée/{bce_id}',[QuantitéCommandController::class, 'totalQuantity']);
+Route::get('/list-of-fourn',[FournisseurController::class, 'listing']);

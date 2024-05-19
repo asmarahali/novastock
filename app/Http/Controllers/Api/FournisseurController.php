@@ -92,4 +92,20 @@ class FournisseurController extends Controller
 
         return response()->json(['message' => 'Fournisseur deleted successfully!'], 200);
     }
+    public function listing()
+{
+    $listOfFour = Fournisseur::all();
+    $data = [];
+
+    foreach ($listOfFour as $four) {
+        $data[] = [
+            'nom' => $four->name,
+            'addresse' => $four->adresse,
+            'number' => $four->number,
+        ];
+    }
+
+    return response()->json($data, 200);
+}
+
 }
