@@ -169,3 +169,9 @@ Route::get('/nbrofBCE',[B_C_ExterneController::class,'mostCommandedProducts']);
 Route::get('/product_commanded_per_year/{product_id}',[QuantitéCommandController::class, 'yearly']);
 Route::get('/quantité_livrée/{bce_id}',[QuantitéCommandController::class, 'totalQuantity']);
 Route::get('/list-of-fourn',[FournisseurController::class, 'listing']);
+
+// dashbord of consomateur
+Route::get('/nbrofBCi/{user_id}',[B_C_InterneController::class, 'getUserBCICount']);
+Route::get('/getQunatityConsu/{user_id}',[QuantiteSortieController::class, 'getQunatityConsu']);
+Route::get('/produitRetourne/{user_id}',[QuantiteSortieController::class, 'produitRetourne']);
+Route::post('/consomation',[B_C_InterneController::class, 'getConsumptionStatistics']);

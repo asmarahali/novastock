@@ -97,11 +97,11 @@ class FournisseurController extends Controller
     $listOfFour = Fournisseur::all();
     $data = [];
 
-    foreach ($listOfFour as $four) {
+    foreach ($listOfFour as $f) {
         $data[] = [
-            'nom' => $four->name,
-            'addresse' => $four->adresse,
-            'number' => $four->number,
+            'nom' => $f->name,
+            'addresse' => $f->adresse,
+            'number' => $f->number,
         ];
     }
 
