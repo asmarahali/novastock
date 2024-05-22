@@ -161,15 +161,11 @@ $result = [
     ['week' => 4, 'total_quantity' => 0]
 ];
 
-// Update the result array with actual data
 foreach ($result as &$weekData) {
     if (isset($statistics[$weekData['week']])) {
         $weekData['total_quantity'] = $statistics[$weekData['week']]->total_quantity;
     }
 }
-
 return response()->json($result);
-}
-     
-    
+} 
 }

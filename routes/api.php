@@ -22,6 +22,9 @@ use App\Http\Controllers\QunatiteDemandeController;
 use App\Http\Controllers\Api\QuantiteSortieController;
 use App\Http\Controllers\Api\StructureController;
 use App\Http\Controllers\Api\B_ReceptionController;
+use App\Http\Controllers\Api\InvantaireController;
+use App\Http\Controllers\Api\QuantitePerduController;
+
 // structure 
 Route::post('/structure', [StructureController::class, 'store']);
 Route::put('/structure/{id}', [StructureController::class, 'update']);
@@ -145,6 +148,10 @@ Route::post('/list-Bs',[B_SortieController::class, 'index_b_sortie']);
 Route::post('/list-Bd',[B_SortieController::class, 'index_b_decharge']);
 Route::post('/create_BDorBS/{b_c_interne_id}',[B_SortieController::class,'createBSorBD']);
 Route::post('/RetourDeProduit/{b_Decharge_id}',[B_SortieController::class,'RetourDeProduit']);
+
+// inventaire
+Route::post('/saveinv',[QuantitePerduController::class,'store']);
+Route::get('/inventaire/{invenataire_id}',[QuantitePerduController::class, 'show']);
 
 //Dashbord of magasinger
 Route::get('/mostDemandedProducts',[QunatiteDemandeController::class, 'mostDemandedProducts']);
