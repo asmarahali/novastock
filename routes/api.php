@@ -182,3 +182,9 @@ Route::get('/nbrofBCi/{user_id}',[B_C_InterneController::class, 'getUserBCICount
 Route::get('/getQunatityConsu/{user_id}',[QuantiteSortieController::class, 'getQunatityConsu']);
 Route::get('/produitRetourne/{user_id}',[QuantiteSortieController::class, 'produitRetourne']);
 Route::post('/consomation',[B_C_InterneController::class, 'getConsumptionStatistics']);
+
+// dashbord of RDS
+Route::get('/nbrofBCItraité',[B_C_InterneController::class, 'countBciNotvadlidatedbyRDS']);
+Route::get('/nbrofBCIrecu',[B_C_InterneController::class, 'countBcivadlidatedbyRDS']);
+Route::get('/getTopConsumers',[UserController::class, 'getTopConsumers']); 
+Route::get('/getTopProduct/{structure_id}',[ProductController::class, 'getTopProductsByStructure']); 

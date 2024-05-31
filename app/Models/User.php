@@ -72,4 +72,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(BCInterne::class, 'user_id');
     }
+    public function structures()
+    {
+        return $this->belongsToMany(Structure::class, 'structure_user');
+    }
 }

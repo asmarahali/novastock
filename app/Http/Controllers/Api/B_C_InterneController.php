@@ -43,18 +43,7 @@ class B_C_InterneController extends Controller
 
     public function ChangeStatus(){
         
-      // hadhi ? ih .. hedhia zaama tbdl status ta3 bci. gtlk khaliha tkon fe la logique ta3 update bci 
-      // example: min yconfirmi lcons bci rah ttbdl status // hna 9asdek ydir envoyer puisque confermer y tsauvgarder brk . ih 
-      // bsah it should not be accessed this way. imagini ja consomateur w b3th 3 requests at the same time 
-      // status rah tkon directment 3 bla ma chafha ta wahd. fhmti lproblem fiha? ih fhamtek mais kayna 7aja + kima ydir envyer syy ma9derch
-      // yzid ydir envoyer yro7lo le droit .. iih justement
-      // hadhya lmethod ChangeStatus rah tkhdm b7sab l'etat ta3 bci +++ role ta3 luser
-
-      // ex: status 0 + consomateur
-      // kima y'acessi had route systematiquement rah ttbdl mn 0 l 1 
-      // w ida accessisah wekhdokhr tjih not allowed, psq fhad lmar7la lconsomateur whdo li y9dr y'envoye a l'etape suivante
-      // fhmti? ih fhamtek 
-        
+      //
           
     }
 
@@ -78,17 +67,17 @@ class B_C_InterneController extends Controller
 
    public function countBci(){
      $bci = BCInterne::where('status', 3)->count();
-     dd($bci);
+    
      return $bci;
    }
    public function countBS(){
     $bci = BCInterne::where('status', 3)->where('type', 0)->count();
-    dd($bci);
+  
     return $bci;
   }
   public function countBD(){
     $bci = BCInterne::where('status', 3)->where('type', 1)->count();
-    dd($bci);
+    
     return $bci;
   }
     //public function index_b_sortie (){
@@ -168,4 +157,14 @@ foreach ($result as &$weekData) {
 }
 return response()->json($result);
 } 
+public function countBciNotvadlidatedbyRDS(){
+    $bci = BCInterne::where('status', 1)->count();
+    return $bci;
+  }
+  
+public function countBcivadlidatedbyRDS(){
+    $bci = BCInterne::where('status', 2)->count();
+    return $bci;
+  }
+
 }

@@ -9,9 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
 use App\Http\Requests\CreateUserRequest;
-
+use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     /**
@@ -189,5 +188,19 @@ class UserController extends Controller
             ];
         });
     }
+    public function getTopConsumers()
+    {
+        // Query to get top 5 consumers
+        $topConsumers = User::select('users.id', 'users.firstname', 'users.lastname', DB::raw('SUM(quantite_demandes.quantity) as total_quantity'))
+            ->join('b_c_internes', 'users.id', '=', 'b_c_internes.user_id')
+            ->join('quantite_demandes', 'b_c_internes.id', '=', 'quantite_demandes.b_c_interne_id')
+            ->groupBy('users.id', 'users.firstname', 'users.lastname')
+            ->orderBy('total_quantity', 'desc')
+            ->take(5)
+            ->get();
+
+        return response()->json($topConsumers);
+    }
+    
 }
 

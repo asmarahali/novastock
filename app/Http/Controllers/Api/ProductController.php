@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Chapter;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -95,6 +96,22 @@ class ProductController extends Controller
     public function nbrofproduct (){
         $products = Product::count();
         return $products;
+    }
+    public function getTopProductsByStructure($structureId)
+    {
+        $topProducts = Product::select('products.id', 'products.name', DB::raw('SUM(quantite_demandes.quantity) as total_quantity'))
+            ->join('quantite_demandes', 'products.id', '=', 'quantite_demandes.product_id')
+            ->join('b_c_internes', 'quantite_demandes.b_c_interne_id', '=', 'b_c_internes.id')
+            ->join('users', 'b_c_internes.user_id', '=', 'users.id')
+            ->join('structure_user', 'users.id', '=', 'structure_user.user_id')
+            ->join('structures', 'structure_user.structure_id', '=', 'structures.id')
+            ->where('structures.id', $structureId)
+            ->groupBy('products.id', 'products.name')
+            ->orderBy('total_quantity', 'desc')
+            ->take(4)
+            ->get();
+
+        return response()->json($topProducts);
     }
 }
 
