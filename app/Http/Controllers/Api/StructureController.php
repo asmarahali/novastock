@@ -13,12 +13,42 @@ class StructureController extends Controller
         $structures = Structure::all();
         return response()->json($structures);
     }
-    
-    // Display the specified resource
-    public function show(Structure $structure)
+   
+    public function showé(Structure $structure_id)
     {
-        return response()->json($structure);
+        //$resf = $structure->users->pluck('firstname'); 
+      //  $resl = $structure->users->pluck('lastname'); 
+        return response()->json([
+            "status" => true,
+            "name" => $structure_id->name,
+           // "responsable" => $resf + $resl,
+            
+        ]);
+        
     }
+    public function show( $structure_id)
+{
+    $structure = Structure::with('responsible')->find($structure_id);
+
+    if (!$structure) {
+        return response()->json([
+            "status" => false,
+            "message" => "Structure not found."
+        ], 404);
+    }
+
+    $structureName = $structure->name;
+
+    $responsibleFirstName = $structure->responsible->firstname;
+    $responsibleLastName = $structure->responsible->lastname;
+
+    return response()->json([
+        "status" => true,
+        "structure_name" => $structureName,
+        "responsible_firstname" => $responsibleFirstName . ' '.$responsibleLastName,
+       
+    ]);
+}
 
    
     public function store(Request $request)
@@ -63,4 +93,5 @@ class StructureController extends Controller
         $structure->delete();
         return response()->json(null, 204);
     }
+    
 }

@@ -21,6 +21,8 @@ return new class extends Migration
     
             $table->unique(['b_decharge_id', 'b_c_interne_id']);
             });
+           
+              
     }
 
     /**

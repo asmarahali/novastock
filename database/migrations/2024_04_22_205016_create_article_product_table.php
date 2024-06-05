@@ -15,7 +15,7 @@ return new class extends Migration
         $table->id();
         $table->unsignedBigInteger('article_id');
         $table->unsignedBigInteger('product_id');
-        // You can add additional columns if needed
+        
         $table->timestamps();
 
         // Define foreign key constraints

@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\QuantitePerduController;
 // structure 
 Route::post('/structure', [StructureController::class, 'store']);
 Route::put('/structure/{id}', [StructureController::class, 'update']);
+Route::get('/structure/{id}', [StructureController::class, 'show']);
 
 Route::get('/products', [ProductController::class, 'index'])->middleware('is_able:read-product');
 Route::post('/products', [ProductController::class, 'store'])->middleware('is_able:create-product');

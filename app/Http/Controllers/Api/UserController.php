@@ -108,12 +108,23 @@ class UserController extends Controller
 
     public function profile(){
 
-        $userData = auth()->user();
+        $user = auth()->user();
+        $roles = $user->roles->pluck('name'); 
+    
         return response()->json([
             "status" => true,
             "message" => "Profile Information",
-            "data" => $userData,
-            "id" => auth()->user()->id
+            "data" => [
+                "id" => $user->id,
+                "firstname" => $user->firstname,
+                "lastname" => $user->lastname,
+                "email" => $user->email,
+                "numero" => $user->numero,
+                "photo_url" => $user->photo_url,
+                "is_active" => $user->is_active,
+                "roles" => $roles 
+            ],
+            "id" => $user->id
         ]);
     }
 
