@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Quantite_livre;
 use App\Rules\ProductExistsInBL;
 use App\Rules\CheckProductCommande;
+use App\Models\BCExterne;
 
 class QuantiteLivréContoller extends Controller
 {
@@ -93,5 +94,28 @@ class QuantiteLivréContoller extends Controller
             'status' => true,
             'quantities' => $quantities
         ], 200);
+    }
+    public function getTotalDeliveredQuantity($bcExterneId)
+    {
+        // Find the external order by ID
+        $bcExterne = BCExterne::findOrFail($bcExterneId);
+
+        // Get all receptions associated with the external order
+        $receptions = B_Reception::where('b_c_externe_id', $bcExterneId)->get();
+
+        // Initialize total quantity
+        $totalQuantity = 0;
+
+        // Loop through each reception to sum the delivered quantities
+        foreach ($receptions as $reception) {
+            $quantiteLivres = Quantite_livre::where('b_reception_id', $reception->id)->get();
+
+            foreach ($quantiteLivres as $quantiteLivre) {
+                $totalQuantity += $quantiteLivre->quantity;
+            }
+        }
+
+        // Return the total quantity as a JSON response
+        return response()->json(['total_delivered_quantity' => $totalQuantity]);
     }
 }

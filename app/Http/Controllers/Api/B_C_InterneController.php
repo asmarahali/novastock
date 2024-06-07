@@ -166,6 +166,15 @@ public function countBcivadlidatedbyRDS(){
     $bci = BCInterne::where('status', 2)->count();
     return $bci;
   }
+  public function countBciNotvadlidatedbyDIR(){
+    $bci = BCInterne::where('status', 2)->count();
+    return $bci;
+  }
+  
+public function countBcivadlidatedbyDIR(){
+    $bci = BCInterne::where('status', 3)->count();
+    return $bci;
+  }
   public function getUserDetailsForBCInterne($bcInterneId)
   {
     $bcInterne = BCInterne::find($bcInterneId);

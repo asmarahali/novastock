@@ -113,5 +113,23 @@ class ProductController extends Controller
 
         return response()->json($topProducts);
     }
+    public function getTopStructuresByProduct($productId)
+{
+    $topStructures = DB::table('structures')
+        ->select('structures.id', 'structures.name', DB::raw('SUM(quantite_demandes.quantity) as total_quantity'))
+        ->join('structure_user', 'structures.id', '=', 'structure_user.structure_id')
+        ->join('users', 'structure_user.user_id', '=', 'users.id')
+        ->join('b_c_internes', 'users.id', '=', 'b_c_internes.user_id')
+        ->join('quantite_demandes', 'b_c_internes.id', '=', 'quantite_demandes.b_c_interne_id')
+        ->join('products', 'quantite_demandes.product_id', '=', 'products.id')
+        ->where('products.id', $productId)
+        ->groupBy('structures.id', 'structures.name')
+        ->orderBy('total_quantity', 'desc')
+        ->take(4)
+        ->get();
+
+    return response()->json($topStructures);
+}
+
 }
 

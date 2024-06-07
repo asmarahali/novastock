@@ -190,4 +190,10 @@ Route::post('/consomation',[B_C_InterneController::class, 'getConsumptionStatist
 Route::get('/nbrofBCItraité',[B_C_InterneController::class, 'countBciNotvadlidatedbyRDS'])->middleware('is_able:countBciNotvadlidatedbyRDS');
 Route::get('/nbrofBCIrecu',[B_C_InterneController::class, 'countBcivadlidatedbyRDS'])->middleware('is_able:countBcivadlidatedbyRDS');
 Route::get('/getTopConsumers',[UserController::class, 'getTopConsumers'])->middleware('is_able:getTopConsumers'); 
-Route::get('/getTopProduct/{structure_id}',[ProductController::class, 'getTopProductsByStructure'])->middleware('getTopProductsByStructure'); 
+Route::get('/getTopProduct/{structure_id}',[ProductController::class, 'getTopProductsByStructure'])->middleware('is_able:getTopProductsByStructure'); 
+
+// dash directeur
+Route::get('/nbrofBCItraité/directeur',[B_C_InterneController::class, 'countBciNotvadlidatedbyDIR'])->middleware('is_able:countBciNotvadlidatedbyDIR');
+Route::get('/nbrofBCIrecu/directeur',[B_C_InterneController::class, 'countBcivadlidatedbyDIR'])->middleware('is_able:countBcivadlidatedbyDIR');
+Route::get('/getTopstructure/{product_id}',[ProductController::class, 'getTopStructuresByProduct'])->middleware('is_able:getTopStructuresByProduct'); 
+Route::get('/getQuantityLivré/{bce_id}',[QuantiteLivréContoller::class, 'getTotalDeliveredQuantity']);//->middleware('is_able:getTotalDeliveredQuantity'); 

@@ -52,7 +52,9 @@ class RolePermissionSeeder extends Seeder
             ],
             Role::DEFAULT_ROLES["DIRECTEUR"] => [
                 'create-BCI','read-BCI','show-BCI','delete-BCI',
-             'add-producrt-to-BCI','update-BCI','show-qnty-BCI'   
+             'add-producrt-to-BCI','update-BCI','show-qnty-BCI','countBciNotvadlidatedbyDIR',
+             'countBcivadlidatedbyDIR','getTotalDeliveredQuantity'
+
             ],
         ];
         foreach ($roles as $role => $permissions) {
