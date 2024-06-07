@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->String('nom');
+            $table->string('nom');
             $table->integer('tva');
+            $table->unsignedBigInteger('chapter_id'); 
             $table->timestamps();
+    
+            $table->foreign('chapter_id')->references('id')->on('chapters')->onDelete('cascade');
         });
     }
 

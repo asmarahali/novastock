@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Article;
+use App\Models\Structure;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,12 +17,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       
-
-        // Seed articles
         $this->call([
-            // ArticleSeeder::class,
-            ProductSeeder::class
+            ArticleSeeder::class,
+            UsersTableSeeder::class,
+            StructureSeeder::class,
+            StructureUserTableSeeder::class,
+            ProductSeeder::class,
+            ChapterSeeder::class,
+            FournisseursTableSeeder::class,
+            UserRoleSeeder::class,
+            RolePermissionSeeder::class,
+            ArticleProductSeeder::class,
         ]);
     }
 }

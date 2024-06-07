@@ -35,7 +35,7 @@ class UserController extends Controller
     
     public function update(Request $request, $id)
     {
-        // Validation
+       
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'nullable',
@@ -43,20 +43,19 @@ class UserController extends Controller
             'numero' => 'required|digits:10|unique:users,numero,' . $id,
             'photo_url' => 'nullable',
             'is_active' => 'nullable|boolean',
-            'password' => 'required',
+           
         ]);
     
         // Find the user
         $user = User::findOrFail($id);
         
-        // Update user data
         $user->firstname = $request->input('firstname');
         $user->lastname = $request->input('lastname');
         $user->email = $request->input('email');
         $user->numero = $request->input('numero');
         $user->photo_url = $request->input('photo_url');
         $user->is_active = $request->input('is_active') ?? true; 
-        $user->password = Hash::make($request->input('password'));
+      
     
         $user->save();
     
@@ -70,13 +69,13 @@ class UserController extends Controller
             "password" => "required"
         ]);
 
-        // Email check
+      
         $user = User::where("email", $request->email)->first();
 
         if(!empty($user)){
-            // User exists
+         
             if(Hash::check($request->password, $user->password)){
-                // Password matched
+               
                 $token = $user->createToken("mytoken")->plainTextToken;
                 Login::create([
                     'user_id' => $user->id,

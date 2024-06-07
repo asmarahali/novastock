@@ -14,18 +14,6 @@ class StructureController extends Controller
         return response()->json($structures);
     }
    
-    public function showé(Structure $structure_id)
-    {
-        //$resf = $structure->users->pluck('firstname'); 
-      //  $resl = $structure->users->pluck('lastname'); 
-        return response()->json([
-            "status" => true,
-            "name" => $structure_id->name,
-           // "responsable" => $resf + $resl,
-            
-        ]);
-        
-    }
     public function show( $structure_id)
 {
     $structure = Structure::with('responsible')->find($structure_id);
@@ -45,12 +33,10 @@ class StructureController extends Controller
     return response()->json([
         "status" => true,
         "structure_name" => $structureName,
-        "responsible_firstname" => $responsibleFirstName . ' '.$responsibleLastName,
+        "responsible_firstname" => $responsibleFirstName .' '.$responsibleLastName,
        
     ]);
 }
-
-   
     public function store(Request $request)
     {
         $request->validate([

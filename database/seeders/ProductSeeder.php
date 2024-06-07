@@ -4,8 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Product;
-
+use Illuminate\Support\Facades\DB;
 class ProductSeeder extends Seeder
 {
     /**
@@ -13,19 +12,97 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory()->count(20)->create();
-        // Generate and insert 20 dummy products
-        /*
-        for ($i = 1; $i <= 20; $i++) {
-            Product::create([
-                'name' => 'Product ' . $i,
-                'description' => 'Description for Product ' . $i,
-                'quantity' => rand(5, 50), // Random quantity between 5 and 50
-                'price' => rand(10, 1000) / 10, // Random price between 1 and 100
-                'min' => rand(1, 10), // Random minimum quantity
-                'fournisseur_id' => rand(1, 5), // Random fournisseur ID (assuming there are 5 fournisseurs)
-                'article_id' => rand(1, 10), // Random article ID (assuming there are 10 articles)
-            ]);
-        }*/
+        DB::table('products')->insert([
+            [
+                'name' => 'Duplicopieur',
+                'description' => '- Monochrome - A3',
+                'quantity' => 10,
+                'price' => 1000.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Duplicopieur',
+                'description' => '- Monochrome - A4',
+                'quantity' => 10,
+                'price' => 900.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Photocopieur',
+                'description' => 'KYOCERA FS-1025 MFP',
+                'quantity' => 10,
+                'price' => 1500.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Photocopieur',
+                'description' => 'Taskalfa 1800',
+                'quantity' => 10,
+                'price' => 2000.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Photocopieur',
+                'description' => 'monochrome multifonction',
+                'quantity' => 10,
+                'price' => 1200.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Photocopieur',
+                'description' => 'XEROX WorkCentre 5335',
+                'quantity' => 10,
+                'price' => 2500.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Photocopieur',
+                'description' => 'Kyocera KM -1635/2035',
+                'quantity' => 10,
+                'price' => 1300.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Photocopieur',
+                'description' => 'LEX MARK MX510',
+                'quantity' => 10,
+                'price' => 1100.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Photorecepteur ',
+                'description' => 'pour panasonic dp 8060',
+                'quantity' => 10,
+                'price' => 800.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Photorecepteur',
+                'description' => 'pour XEROX Workcenter 5230',
+                'quantity' => 10,
+                'price' => 850.00,
+                'min' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }
