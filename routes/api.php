@@ -141,6 +141,7 @@ Route::delete('/bci/{id}', [B_C_InterneController::class, 'destroy'])->middlewar
 Route::post('/bci-add-product', [QunatiteDemandeController::class ,'store'])->middleware('is_able:add-producrt-to-BCI');
 Route::put('/update-bci/{b_c_interne_id}',[QunatiteDemandeController::class, 'update'])->middleware('is_able:update-BCI');
 Route::get('/BS/{b_sortie_id}',[QuantiteSortieController::class, 'show'])->middleware('is_able:show_bs');
+Route::get('/bc_interne/{id}/user-details',[B_C_InterneController::class,'getUserDetailsForBCInterne'] );// return the firstname and the lastname ant structuer of user 
 
 // changer l'etat de bci 
 Route::patch('/bci/{bc}/send', [B_C_InterneController::class,'send']);

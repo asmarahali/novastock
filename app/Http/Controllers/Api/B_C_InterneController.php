@@ -166,5 +166,40 @@ public function countBcivadlidatedbyRDS(){
     $bci = BCInterne::where('status', 2)->count();
     return $bci;
   }
+  public function getUserDetailsForBCInterne($bcInterneId)
+  {
+    $bcInterne = BCInterne::find($bcInterneId);
+
+    if (!$bcInterne) {
+        return response()->json(['error' => 'BCInterne not found'], 404);
+    }
+
+    $user = DB::table('b_c_internes')
+    ->where('id', $bcInterneId)
+    ->value('user_id');
+$firstname =DB::table('users')
+->where('id', $user)
+->value('firstname');
+$lastname =DB::table('users')
+->where('id', $user)
+->value('lastname');
+    if (!$user) {
+        return response()->json(['error' => 'User not found for this BCInterne'], 404);
+    }
+
+    $structuresid = DB::table('structure_user')
+    ->where('user_id', $user)
+    ->value('structure_id');
+
+    $structures=DB::table('structures')
+    ->where('id',  $structuresid)
+    ->value('name');
+
+    return response()->json([
+        'firstname' => $firstname,
+        'lastname' => $lastname,
+        'structures' => $structures // Only get the structure names
+    ]);
+  }
 
 }
